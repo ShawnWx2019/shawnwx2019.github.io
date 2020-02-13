@@ -1,24 +1,104 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://shawnwx2019.github.io</id>
-    <title>🎄Shawn  💕 Zoe 🎄</title>
-    <updated>2020-02-13T22:48:22.520Z</updated>
-    <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://shawnwx2019.github.io"/>
-    <link rel="self" href="https://shawnwx2019.github.io/atom.xml"/>
-    <subtitle>生信⌨️
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>「蛋白注释」- 批量InterProScan注释 | 🎄Shawn  💕 Zoe 🎄</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://shawnwx2019.github.io/favicon.ico?v=1581634098263">
+<link rel="stylesheet" href="https://shawnwx2019.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="什么是InterProScan数据库
+
+InterPro provides functional analysis of proteins by classifying them into families and predicting d..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://shawnwx2019.github.io">
+        <img src="https://shawnwx2019.github.io/images/avatar.png?v=1581634098263" class="site-logo">
+        <h1 class="site-title">🎄Shawn  💕 Zoe 🎄</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      生信⌨️
 科研⛓
-摄影📷</subtitle>
-    <logo>https://shawnwx2019.github.io/images/avatar.png</logo>
-    <icon>https://shawnwx2019.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2020, 🎄Shawn  💕 Zoe 🎄</rights>
-    <entry>
-        <title type="html"><![CDATA[「蛋白注释」- 批量InterProScan注释]]></title>
-        <id>https://shawnwx2019.github.io/post/dan-bai-zhu-shi-pi-liang-interproscan-zhu-shi</id>
-        <link href="https://shawnwx2019.github.io/post/dan-bai-zhu-shi-pi-liang-interproscan-zhu-shi">
-        </link>
-        <updated>2020-02-13T22:44:12.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="什么是interproscan数据库">什么是InterProScan数据库</h2>
+摄影📷
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://shawnwx2019.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">「蛋白注释」- 批量InterProScan注释</h2>
+            <div class="post-date">2020-02-14</div>
+            
+            <div class="post-content" v-pre>
+              <h2 id="什么是interproscan数据库">什么是InterProScan数据库</h2>
 <blockquote>
 <p>InterPro provides functional analysis of proteins by classifying them into families and predicting domains and important sites. To classify proteins in this way, InterPro uses predictive models, known as signatures, provided by several different databases (referred to as member databases) that make up the InterPro consortium. We combine protein signatures from these member databases into a single searchable resource, capitalising on their individual strengths to produce a powerful integrated database and diagnostic tool.</p>
 </blockquote>
@@ -163,16 +243,51 @@ nohup sh BatchInterProScan.sh config &amp;
 </code></pre>
 <p>当然也可以限定输出形式，<code>--outfmt</code>具体vim 一下<code>iprscan5.py</code>都有，然后就是漫长的等待结果了。</p>
 <p>❀❀完了，碎一觉明天看结果❀❀</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[第一篇博客]]></title>
-        <id>https://shawnwx2019.github.io/post/wei-shi-me-kai-zhe-ge-bo-ke</id>
-        <link href="https://shawnwx2019.github.io/post/wei-shi-me-kai-zhe-ge-bo-ke">
-        </link>
-        <updated>2020-02-13T07:49:09.000Z</updated>
-        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://shawnwx2019.github.io/post-images/1581586535592.jpg" alt="" loading="lazy"></figure>
-<p>今天偶然在网上看到可以利用<code>Gridea</code>简单的管理<code>github.page</code>, 所以萌生了这个开自己的博客的想法，然后一步一步完成了操作，以后会在这里记录学习，生活，当老了回顾这些的时候会找回年轻时候的自己。</p>
-]]></content>
-    </entry>
-</feed>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://shawnwx2019.github.io/post/wei-shi-me-kai-zhe-ge-bo-ke">
+                  <h3 class="post-title">
+                    第一篇博客
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>
