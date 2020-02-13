@@ -2,13 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://shawnwx2019.github.io</id>
     <title>🎄Shawn 💕 Zoe の 小木屋🎄</title>
-    <updated>2020-02-13T07:11:25.680Z</updated>
+    <updated>2020-02-13T07:13:49.265Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://shawnwx2019.github.io"/>
     <link rel="self" href="https://shawnwx2019.github.io/atom.xml"/>
-    <subtitle>&lt;font color = red face=&quot;arial&quot;&gt;Reading 📖&lt;/font&gt;
-&lt;font color = green face=&quot;arial&quot;&gt;Bioinformatics 💻&lt;/font&gt;
-&lt;font color = blue face=&quot;arial&quot;&gt;Photography 📷&lt;/font&gt;</subtitle>
     <logo>https://shawnwx2019.github.io/images/avatar.png</logo>
     <icon>https://shawnwx2019.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 🎄Shawn 💕 Zoe の 小木屋🎄</rights>
