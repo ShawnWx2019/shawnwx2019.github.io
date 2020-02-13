@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>http://localhost:4000</id>
-    <title>Gridea</title>
-    <updated>2020-02-13T06:08:50.502Z</updated>
+    <id>https://shawnwx2019.github.io</id>
+    <title>🎄Shawn 💕 Zoe の 小木屋🎄</title>
+    <updated>2020-02-13T07:11:25.680Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="http://localhost:4000"/>
-    <link rel="self" href="http://localhost:4000/atom.xml"/>
-    <subtitle>温故而知新</subtitle>
-    <logo>http://localhost:4000/images/avatar.png</logo>
-    <icon>http://localhost:4000/favicon.ico</icon>
-    <rights>All rights reserved 2020, Gridea</rights>
+    <link rel="alternate" href="https://shawnwx2019.github.io"/>
+    <link rel="self" href="https://shawnwx2019.github.io/atom.xml"/>
+    <subtitle>&lt;font color = red face=&quot;arial&quot;&gt;Reading 📖&lt;/font&gt;
+&lt;font color = green face=&quot;arial&quot;&gt;Bioinformatics 💻&lt;/font&gt;
+&lt;font color = blue face=&quot;arial&quot;&gt;Photography 📷&lt;/font&gt;</subtitle>
+    <logo>https://shawnwx2019.github.io/images/avatar.png</logo>
+    <icon>https://shawnwx2019.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2020, 🎄Shawn 💕 Zoe の 小木屋🎄</rights>
     <entry>
         <title type="html"><![CDATA[Hello Gridea]]></title>
-        <id>http://localhost:4000/post/hello-gridea</id>
-        <link href="http://localhost:4000/post/hello-gridea">
+        <id>https://shawnwx2019.github.io/post/hello-gridea</id>
+        <link href="https://shawnwx2019.github.io/post/hello-gridea">
         </link>
         <updated>2018-12-11T16:00:00.000Z</updated>
         <summary type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
