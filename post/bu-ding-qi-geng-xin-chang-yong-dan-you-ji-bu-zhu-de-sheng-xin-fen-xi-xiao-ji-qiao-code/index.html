@@ -1,24 +1,109 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://shawnwx2019.github.io</id>
-    <title>🎄Shawn  💕 Zoe 🎄</title>
-    <updated>2020-02-13T23:25:51.880Z</updated>
-    <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://shawnwx2019.github.io"/>
-    <link rel="self" href="https://shawnwx2019.github.io/atom.xml"/>
-    <subtitle>生信⌨️
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>「不定期更新」常用但又记不住的生信分析小技巧(code) | 🎄Shawn  💕 Zoe 🎄</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://shawnwx2019.github.io/favicon.ico?v=1581636306271">
+<link rel="stylesheet" href="https://shawnwx2019.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="Section 1 R
+
+批量导入Table 储存为数据框: 比如有大量的数据，逗号分隔符的例如.csv，制表符分隔符的例如 .txt 部分 .xls，一个一个read太慢，需要批量导入
+
+setwd(&quot;DirofYourData..." />
+    <meta name="keywords" content="bioinformatics" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://shawnwx2019.github.io">
+        <img src="https://shawnwx2019.github.io/images/avatar.png?v=1581636306271" class="site-logo">
+        <h1 class="site-title">🎄Shawn  💕 Zoe 🎄</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      生信⌨️
 科研⛓
-摄影📷</subtitle>
-    <logo>https://shawnwx2019.github.io/images/avatar.png</logo>
-    <icon>https://shawnwx2019.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2020, 🎄Shawn  💕 Zoe 🎄</rights>
-    <entry>
-        <title type="html"><![CDATA[「不定期更新」常用但又记不住的生信分析小技巧(code)]]></title>
-        <id>https://shawnwx2019.github.io/post/bu-ding-qi-geng-xin-chang-yong-dan-you-ji-bu-zhu-de-sheng-xin-fen-xi-xiao-ji-qiao-code</id>
-        <link href="https://shawnwx2019.github.io/post/bu-ding-qi-geng-xin-chang-yong-dan-you-ji-bu-zhu-de-sheng-xin-fen-xi-xiao-ji-qiao-code">
-        </link>
-        <updated>2020-02-13T23:17:26.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="section-1-r">Section 1 R</h2>
+摄影📷
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://shawnwx2019.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">「不定期更新」常用但又记不住的生信分析小技巧(code)</h2>
+            <div class="post-date">2020-02-14</div>
+            
+              <div class="feature-container" style="background-image: url('https://shawnwx2019.github.io/post-images/bu-ding-qi-geng-xin-chang-yong-dan-you-ji-bu-zhu-de-sheng-xin-fen-xi-xiao-ji-qiao-code.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h2 id="section-1-r">Section 1 R</h2>
 <ul>
 <li><strong>批量导入Table 储存为数据框:</strong> 比如有大量的数据，逗号分隔符的例如.csv，制表符分隔符的例如 .txt 部分 .xls，一个一个read太慢，需要批量导入</li>
 </ul>
@@ -373,169 +458,59 @@ DIR 01;33     # directory
 # 运行bash命令，或者重新登录，即logout然后login
 </code></pre>
 <p><a href="https://blog.csdn.net/yasi_xi/article/details/17318113">Source: CSDN, by yas_xi</a></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[「蛋白注释」- 批量InterProScan注释]]></title>
-        <id>https://shawnwx2019.github.io/post/Batch-InterProScan</id>
-        <link href="https://shawnwx2019.github.io/post/Batch-InterProScan">
-        </link>
-        <updated>2020-02-13T22:44:12.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="什么是interproscan数据库">什么是InterProScan数据库</h2>
-<blockquote>
-<p>InterPro provides functional analysis of proteins by classifying them into families and predicting domains and important sites. To classify proteins in this way, InterPro uses predictive models, known as signatures, provided by several different databases (referred to as member databases) that make up the InterPro consortium. We combine protein signatures from these member databases into a single searchable resource, capitalising on their individual strengths to produce a powerful integrated database and diagnostic tool.</p>
-</blockquote>
-<p>可以看出InterPro数据库主要通过蛋白序列信息将蛋白分类，分为一个个家族。是一个很强大的数据库，具体的算法和实现逻辑不阐述，主要是我也不懂😂🤣，这里主要介绍这个数据库的使用方法。<br>
-主要有三种方式：</p>
-<ol>
-<li>在线网站注释，「<a href="http://www.ebi.ac.uk/interpro/">InterPro</a> 」根据网站提示一步一步就会得到结果，这个也没啥好讲的，唯一的缺点就是没有办法批量做，每次只能输入一个蛋白质序列。</li>
-<li>本地InterProScan：参考「<a href="https://www.bioinfo-scrounger.com/archives/164/">Kai大神的blog</a>」这个blog中写的很清楚，但是太耗存储了，所以我也放弃了</li>
-<li>利用<a href="https://www.ebi.ac.uk/seqdb/confluence/display/JDSAT/InterProScan+5+Help+and+Documentation">EMBL-EBI</a>，（最好搭梯子访问）这个官方的黑科技很赞，下面主要说一下怎么用这玩意（Macos下，linux下应该也一样，win不太清楚）</li>
-</ol>
-<h2 id="步骤">步骤</h2>
-<p>这里直接搬运过来了</p>
-<blockquote>
-<p>The <a href="https://www.ebi.ac.uk/seqdb/confluence/pages/viewpage.action?pageId=68165098">Representational State Transfer (REST)</a> sample clients are provided for a number of programming languages. For details of how to use these clients, <a href="https://github.com/ebi-wp/webservice-clients">download</a> the client and run the program without any arguments.</p>
-</blockquote>
-<table>
-<thead>
-<tr>
-<th>Language</th>
-<th>Download</th>
-<th>Requirements</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Perl</td>
-<td><a href="https://raw.githubusercontent.com/ebi-wp/webservice-clients/master/perl/iprscan5.pl">iprscan5.pl</a></td>
-<td><a href="http://search.cpan.org/perldoc?LWP">LWP</a> and <a href="http://search.cpan.org/perldoc?XML::Simple">XML::Simple</a></td>
-</tr>
-<tr>
-<td>Python</td>
-<td><a href="https://raw.githubusercontent.com/ebi-wp/webservice-clients/master/python/iprscan5.py">iprscan5.py</a></td>
-<td><a href="https://pypi.python.org/pypi/xmltramp2/3.0.10" title="https://pypi.python.org/pypi/xmltramp2/3.0.10">xmltramp2</a></td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p>For details see <a href="https://www.ebi.ac.uk/seqdb/confluence/display/JDSAT/Environment+setup+for+REST+Web+Services">Environment setup for REST Web Services</a> and <a href="https://www.ebi.ac.uk/seqdb/confluence/display/JDSAT/Examples+for+Perl+REST+Web+Services+Clients">Examples for Perl REST Web Services Clients</a> pages.</p>
-</blockquote>
-<ul>
-<li>Perl用不明白，所以打算用Python的脚本，首先就是先下载上面的<code>iprscan5.py</code>，但是想用这个脚本需要先安装依赖：<code>xmltramp2</code></li>
-</ul>
-<pre><code class="language-python">pip install xmltramp2==3.0.10
-</code></pre>
-<ul>
-<li>其实这个脚本也是一个一个提交到网站做InterProScan的，但是你可以自己写个python或者shell script实现批量化操作，但是需要提前把fasta文件分割成一条序列一个文件，这里拿来主义用的别人现成的脚本：<a href="https://www.cnblogs.com/huangyinger/p/10418661.html">参考blog中有下载链接</a></li>
-</ul>
-<pre><code class="language-bash">## 首先看下一共有几条序列
-grep '&gt;' 01.lp.sss.candidate.fa | wc -l
-# 279 ## 共有279条序列，那么就切成279个文件
-perl fasta-splitter.pl --n-parts 279 01.lp.sss.candidate.fa
-# 01.lp.sss.candidate.fa: 279 sequences, 122269 bp =&gt; dividing into 279 parts ...................................................................................................................................................................................................................................................................................... OK
-# All done, 0 seconds elapsed
-# 01.lp.sss.candidate.part-128.fa 01.lp.sss.candidate.part-269.fa
-# 01.lp.sss.candidate.part-129.fa 01.lp.sss.candidate.part-270.fa
-# 这里有点问题一共最后分成了278个，少一个，打算揪出这个家伙。
-for i in `ls *.part*`; do grep '&gt;' $i &gt; $i.checkWrong.xls; done
-wc -l *.checkW*
-## 2 01.lp.sss.candidate.part-270.fa.checkWrong.xls 
-## 270这个有两个
-rm *.checkW*
-less *270*
-# &gt;g35074 
-# seq...
-# &gt;g47610
-# seq...
-# 手动分开吧，没办法
-vim *270
-# 复制第二个序列粘贴到新的01.lp.sss.candidate.part-270.2.fa里面
-vim 01.lp.sss.candidate.part-270.2.fa
-mv 01.lp.sss.candidate.part-270.fa 01.lp.sss.candidate.part-270.1.fa
-## 这样顺序不会出错
 
-## 强迫症，想把文件改成序列ID写个脚本搞定他
-## 1. 做个配置文件
-ls *.part* &gt; filenameOld ##先把旧文件的文件名保存到filenameOld中，
-grep '&gt;' 01.lp.sss.candidate.fa &gt;seqID ## 再将序列名字保存到seqID中，vim打开用 :1,$s/&gt;//，删掉&gt;
-## double check 序列和配置文件顺序
-for i in `ls *.part*`; do grep '&gt;' $i &gt;&gt; checkID; done
-paste checkID seqID &gt; doublecheckSeqOrder
-## 可以手动检查也可以用awk检查
-awk '{if ($1 == $2) print &quot;True&quot;; else print &quot;False&quot;}' doublecheckSeqOrder &gt; checkresult
-cat checkresult | sort |uniq -c
-#  279 True
-paste checkID filenameOld &gt; ChangeName.config
-# 删掉 &gt; 还是喜欢在vim下修改： :1,$s/&gt;//g
-vim ChangeName.sh
-## 脚本内容如下：
-while read id
-do
-    sample=$(echo $id |cut -d&quot; &quot; -f 1 ) 
-    oldfile=$(echo $id |cut -d&quot; &quot; -f 2 ) 
-    echo $sample
-    echo $oldfile
-    
-mv ${oldfile} ${sample}.fa
-done &lt;$1
-## 加执行权限
-chmod +x ChangeName.sh
-sh ChangeName.sh ChangeName.config
-## done
-</code></pre>
-<h3 id="单个序列测试">单个序列测试</h3>
-<pre><code class="language-python"># 先跑一个测试下
-python ~/10.InterproScan/iprscan5.py --sequence ../01.SeqSplit/g10038.fa --email myemail@126.com
-JobId: iprscan5-R20200128-131432-0055-48082224-p2m
-#RUNNING
-#RUNNING
-#RUNNING
-#RUNNING
-#RUNNING
-#RUNNING
-#RUNNING
-#RUNNING
-#RUNNING
-#FINISHED
-#Creating result file: iprscan5-R20200128-131432-0055-48082224-p2m.out.txt
-#Creating result file: iprscan5-R20200128-131432-0055-48082224-p2m.log.txt
-#Creating result file: iprscan5-R20200128-131432-0055-48082224-p2m.tsv.txt
-#Creating result file: iprscan5-R20200128-131432-0055-48082224-p2m.xml.xml
-#Creating result file: iprscan5-R20200128-131432-0055-48082224-p2m.htmltarball.html.tar.gz
-#Creating result file: iprscan5-R20200128-131432-0055-48082224-p2m.gff.txt
-#Creating result file: iprscan5-R20200128-131432-0055-48082224-p2m.svg.svg
-#Creating result file: iprscan5-R20200128-131432-0055-48082224-p2m.sequence.txt
-#Creating result file: iprscan5-R20200128-131432-0055-48082224-p2m.json.txt
-</code></pre>
-<h3 id="批量进行">批量进行</h3>
-<pre><code class="language-bash">## 配置文件
-ls ../02.SeqSplit/*.fa &gt; config
-## 脚本
-while read id
-do
-    file=$(basename $id ) 
-    sample=${file%%.*} 
-    echo $id $sample 
-    python  ~/10.InterproScan/iprscan5.py --sequence $id --email shawnwang2016@126.com --outfile ${sample}
-done &lt;$1
-## 执行
-chmod +x BatchInterProScan.sh
-nohup sh BatchInterProScan.sh config &amp;
-## done
-</code></pre>
-<p>当然也可以限定输出形式，<code>--outfmt</code>具体vim 一下<code>iprscan5.py</code>都有，然后就是漫长的等待结果了。</p>
-<p>❀❀完了，碎一觉明天看结果❀❀</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[第一篇博客]]></title>
-        <id>https://shawnwx2019.github.io/post/wei-shi-me-kai-zhe-ge-bo-ke</id>
-        <link href="https://shawnwx2019.github.io/post/wei-shi-me-kai-zhe-ge-bo-ke">
-        </link>
-        <updated>2020-02-13T07:49:09.000Z</updated>
-        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://shawnwx2019.github.io/post-images/1581586535592.jpg" alt="" loading="lazy"></figure>
-<p>今天偶然在网上看到可以利用<code>Gridea</code>简单的管理<code>github.page</code>, 所以萌生了这个开自己的博客的想法，然后一步一步完成了操作，以后会在这里记录学习，生活，当老了回顾这些的时候会找回年轻时候的自己。</p>
-]]></content>
-    </entry>
-</feed>
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://shawnwx2019.github.io/tag/5cSM3ANbu" class="tag">
+                    bioinformatics
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://shawnwx2019.github.io/post/Batch-InterProScan">
+                  <h3 class="post-title">
+                    「蛋白注释」- 批量InterProScan注释
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>
