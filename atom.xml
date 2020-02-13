@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://shawnwx2019.github.io</id>
-    <title>Shawn  💕 Zoe </title>
-    <updated>2020-02-13T09:25:19.889Z</updated>
+    <title>🎄Shawn  💕 Zoe 🎄</title>
+    <updated>2020-02-13T09:42:02.017Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://shawnwx2019.github.io"/>
     <link rel="self" href="https://shawnwx2019.github.io/atom.xml"/>
@@ -11,14 +11,15 @@
 摄影📷</subtitle>
     <logo>https://shawnwx2019.github.io/images/avatar.png</logo>
     <icon>https://shawnwx2019.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2020, Shawn  💕 Zoe </rights>
+    <rights>All rights reserved 2020, 🎄Shawn  💕 Zoe 🎄</rights>
     <entry>
-        <title type="html"><![CDATA[为什么开这个博客]]></title>
+        <title type="html"><![CDATA[第一篇博客]]></title>
         <id>https://shawnwx2019.github.io/post/wei-shi-me-kai-zhe-ge-bo-ke</id>
         <link href="https://shawnwx2019.github.io/post/wei-shi-me-kai-zhe-ge-bo-ke">
         </link>
         <updated>2020-02-13T07:49:09.000Z</updated>
-        <content type="html"><![CDATA[<p><strong>写在前面</strong> 今天偶然在</p>
+        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://shawnwx2019.github.io/post-images/1581586535592.jpg" alt="" loading="lazy"></figure>
+<p>今天偶然在网上看到可以利用<code>Gridea</code>简单的管理<code>github.page</code>, 所以萌生了这个开自己的博客的想法，然后一步一步完成了操作，以后会在这里记录学习，生活，当老了回顾这些的时候会找回年轻时候的自己。</p>
 ]]></content>
     </entry>
 </feed>
