@@ -1,0 +1,460 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>「TBtools Plugin」批量生成气泡图 | Shawn&#39;s Bioinformatics Blog</title>
+<link rel="shortcut icon" href="https://shawnwx2019.github.io/favicon.ico?v=1677490078901">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://shawnwx2019.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="「TBtools Plugin」批量生成气泡图 | Shawn&#39;s Bioinformatics Blog - Atom Feed" href="https://shawnwx2019.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="说出来你可能不信，我刚才用TBtools插件卡了个Bug！
+
+不过CJ大佬看完我调皮操作之后，马上甩出了一个功能：支持输入路径（文件夹），因为之前只支持输入单个文件。
+额，插件使用其实很简单，这次blog主要面向插件制作用户...
+如何卡B..." />
+    <meta name="keywords" content="TBtools,插件,富集分析" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://shawnwx2019.github.io">
+  <img class="avatar" src="https://shawnwx2019.github.io/images/avatar.png?v=1677490078901" alt="">
+  </a>
+  <h1 class="site-title">
+    Shawn&#39;s Bioinformatics Blog
+  </h1>
+  <p class="site-description">
+    <font color=green>温故而知新</font>
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              「TBtools Plugin」批量生成气泡图
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-02-02
+              </span>
+              <span>
+                11 min read
+              </span>
+              
+                <a href="https://shawnwx2019.github.io/7IQ4dQhrNC/" class="post-tag">
+                  # TBtools
+                </a>
+              
+                <a href="https://shawnwx2019.github.io/fdXt7u8Hl5/" class="post-tag">
+                  # 插件
+                </a>
+              
+                <a href="https://shawnwx2019.github.io/juU6QRjoHA/" class="post-tag">
+                  # 富集分析
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <p>说出来你可能不信，我刚才用TBtools插件卡了个Bug！</p>
+<!--more-->
+<p>不过CJ大佬看完我调皮操作之后，马上甩出了一个功能：<code>支持输入路径（文件夹）</code>，因为之前只支持输入单个文件。</p>
+<p><strong>额，插件使用其实很简单，这次blog主要面向插件制作用户...</strong></p>
+<h2 id="如何卡bug成功">如何卡Bug成功....</h2>
+<p>最近在搞多组合的转录组分析，于是有了好多个富集分析的结果，虽然我以及在电脑上写好了富集分析-出图的代码流程（全程TBtools+R）写一个配置文件，一键批量做，但是之前的出图代码多少有点粗糙，我也不想再回去改R代码..毕竟我这水平，改自己的代码如同在写bug，所以就直接把出图的代码给注释掉了，后续大概有40个go和kegg富集分析结果，一个一个扔插件里跑要累死... 于是想着把bubble plot插件改一下，最后出图的时候写个循环。那么就存在一个问题。批量读入R的过程。</p>
+<p>总结起来做TBtools的插件太简单了，如果你之前有现成的Rscript。完全可以直接写个config.txt的配置文件一打包就做成插件了...</p>
+<p><strong>我们先看下TBtools是怎么实现把你的参数可视化的。</strong><br>
+首先看下config.txt的配置文件</p>
+<pre><code class="language-ruby">App=Demo R-ggplot BarPlot
+Script=script.r
+# Optional
+Icon=Icon.jpg
+# Optional
+Layout=2
+# Optional
+Demo=fpkm.xls
+# Optional
+Manual=Readme.txt
+# Optional
+Link=https://github.com/CJ-Chen/TBtools/releases
+# All lines start with a &quot;#&quot; will be ignored.
+# an input file/paste =&gt; Type=Note
+File=Set a Tab-delimited Table
+# text input =&gt; Type=Note=DefaultValue
+Text=Plot Title:=R-ggplot2 BarPlot
+# yes or no options =&gt; Type=Note
+CheckBox=Log-tranformed
+# multiple choice  =&gt; Type=Note=Choice1,Choice2,Choice3
+Choice=Color Palette:=Set1,Set2,Set3
+# Specify a Color
+Color=Set a Color:=#e31a1c
+# Demo Directory Select Panel
+Directory=Set a Directory
+</code></pre>
+<p>这个是CJ释放的最新的插件demo中的config。最全参数的。其中</p>
+<pre><code class="language-ruby"># an input file/paste =&gt; Type=Note
+File=Set a Tab-delimited Table
+</code></pre>
+<p>到了TBtools界面上就是<br>
+<img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/20210202090840.jpg" alt="File" loading="lazy"><br>
+CJ也对File这个选项进行了说明，就是<code>输入的一个文件</code>,而且存在一个<code>Paste input</code>，虽然不太理解<code>Type=Note</code>这种类型是什么，但是可以盲猜是<strong>字符</strong>，比如在我GO bubble Plot插件中，在把Term Number这个变量赋值R的时候要用as.numeric转换成数字。实际上在使用R脚本的时候读入文件，<code>Rscript /path/file</code> 这里变量所使用的也是路径，说白了就是一串字符。</p>
+<p><strong>那么可以先做两个假设：</strong></p>
+<ol>
+<li>CJ大佬使用了基于TBtools或者Java的骚操作把你读入的**“文件”**最后一顿操作最后生成一个专有的路径读近R... （可能产生一些中间文件，临时文件等...）</li>
+<li>大道至简，直接把你输入的路径给了R...（感觉是这样的....）</li>
+</ol>
+<p>我感觉是第二个，这个就意味着我可以卡个bug。我把路径扔到文件选项框里，TBtools会提示你放入的不是一个文件，如果软件逻辑里面这里有个报错打断的话，后面可能就gg了，但是没有，这里估计会有个提示，但是后面的代码还是运行了。那么就实现了后面还继续跑，我把路径下包含特征字符的文件批量读近TBtools，最后批量生产气泡图。</p>
+<p><strong>Bug成功截图</strong><br>
+<img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/B8BFBA566496114A5916C78480FC3A98.png" alt="Bug" loading="lazy"><br>
+虽然提示文件不可用，但是跑出来了，哈哈。</p>
+<p>然后群里卖了个萌，大佬一个滑铲插件的两个新功能诞生了：</p>
+<p><a href="https://mp.weixin.qq.com/s/6eM4T9pEbZ8kyz9MwSH1Bg">Update | TBtools R Plugin 制备套件更新</a></p>
+<ul>
+<li>Color，不需要在手动输入16进制颜色代码，直接调用TBtools的调色板，点击选择就可以</li>
+<li>Directory，支持了路径输入。</li>
+</ul>
+<h2 id="插件的使用">插件的使用</h2>
+<p>先看下新的界面：<br>
+<img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/20210202093240.jpg" alt="Batch Enrichment" loading="lazy"></p>
+<ul>
+<li>界面和<code>GO bubble Plot</code>类似，file input改成了directory input。</li>
+</ul>
+<blockquote>
+<p>这里把你做好的富集分析文件放到一个文件夹下，为了不必要的麻烦，这些文件中最好不要有特殊字符（比如引号，括号，空格，/ \ |等....）而且<strong>这些文件名要有共同的特征</strong> 比如TBtools直接输入的GO富集分析最终结果文件最后都有。 <code>*.final.xls</code>如果有一定coding基础或者知道通配符的话可以知道，后续批量读入就是靠这些特征读取的。</p>
+</blockquote>
+<ul>
+<li>pattern只的就是你要批量富集的这些结果文件名共有的特征。</li>
+<li>剩下的参数参考GO Bubble Plot那篇文章：</li>
+</ul>
+<p><a href="https://mp.weixin.qq.com/s/AOuVZShZXBnmKH9ie_Vplg">『TBtools-plugin』Bubble plot插件</a></p>
+<ul>
+<li>这里吧min和max改成了TBtools新设定的Color类型。不在是之前的Text类型。</li>
+</ul>
+<p><strong>如果你对TBtools插件制作感兴趣，继续看下面的内容</strong></p>
+<h2 id="配置文件和批量读入">配置文件和批量读入</h2>
+<p>看下我的配置文件</p>
+<pre><code class="language-ruby">App=Batch Bubble plot ## 插件显示的名字
+Script=BatchBubble.R ## 执行的脚本文件名
+# Optional
+Icon=Icon.png  ## 插件上显示图片文件名
+# Optional
+Layout=4 ## 布局
+# Optional
+Manual=BatchBubble.html ## 操作手册
+# Optional
+Link=https://gitee.com/shawnmagic/swtbplugin ## 你想放入的链接
+# All lines start with a &quot;#&quot; will be ignored.
+# input dir
+## 最后一个等号后面的值相当于默认值（default）会直接显示在插件上。
+Directory=Set a Directory ## Directory就是设定插件上输入路径的方框 对应脚本中的第一个变量
+## Pattern
+Text=pattern:=*.final.xls ## 这里是输入参数Pattern这个参数，对应第二个变量
+## go terms num 
+Text=Term Number:=30 ## 展示的GOterm个数 对应第三个变量
+# multiple choice  =&gt; Type=Note=Choice1,Choice2,Choice3
+Choice=Input Data Form:=TBtools_GO,TBtools_KEGG,customized ## 富集文件类型选项 第四个变量
+Choice=Graph Type:=Bubble,bar ##图片类型选项 第5个变量
+# color
+Color=min:=#e41a1c ## 最小值颜色 第6个选项
+Color=max:=#3300ff ## 最大值颜色 第7个选项
+</code></pre>
+<p>就这么多，这样就把插件的布局做好了。再看下对应脚本内的设置</p>
+<p><strong>参数设置和调试信息</strong></p>
+<pre><code class="language-R">##########################################################
+#     prj:  Enrichment result Enrichment Visualization
+#     date: 06 Jan 2021
+#     Author: Shawn Wang
+##########################################################
+options(stringsAsFactors = F)
+options(&quot;repos&quot; = c(CRAN=&quot;https://mirrors.tuna.tsinghua.edu.cn/CRAN/&quot;))
+argv &lt;- commandArgs(TRUE)
+expfile &lt;- argv[1] # 'file '
+pattern &lt;- argv[2]
+num &lt;- argv[3] #  &quot;how many go terms do you want to show&quot;
+num = as.numeric(num)
+DataF &lt;- argv[4] # &quot;data formate&quot;
+Gtype &lt;- argv[5] # 'barplot or Bubble'
+colormin &lt;- argv[6] # 'pvalue color'
+colormax &lt;- argv[7] # 'pvalue color'
+# print(Gtype)
+if (!require('ggplot2')) install.packages('ggplot2')
+if (!require('dplyr')) install.packages('dplyr')
+if (!require('stringr')) install.packages('stringr')
+if (!require('magrittr')) install.packages('magrittr')
+library(ggplot2)
+library(dplyr)
+library(magrittr)
+library(stringr)
+## test set
+# setwd(&quot;~/03.project/01.Heterosis/03.process/02.Enrichment/01.GOEnrich/03.graph/&quot;)
+# expfile = &quot;~/03.project/01.Heterosis/03.process/02.Enrichment/01.GOEnrich/03.graph/&quot;
+# pattern = &quot;*.DEList.xls.GO.Enrichment.final.xls&quot;
+# num = 30
+# DataF = &quot;TBtools_GO&quot;
+# Gtype = &quot;Bubble&quot;
+# colormin = &quot;red&quot;
+# colormax = &quot;blue&quot;
+</code></pre>
+<ul>
+<li>
+<p>开始的两个<code>option</code>是我的习惯... 根据自己习惯来</p>
+</li>
+<li>
+<p>变量设置，可以对应回<code>config</code>，config中的参数顺序和这里面argv中变量的顺序要保持一致。最好按顺序来，防止把自己搞懵逼了。</p>
+</li>
+</ul>
+<pre><code class="language-R">argv &lt;- commandArgs(TRUE)
+expfile &lt;- argv[1] # 'file '
+pattern &lt;- argv[2]
+num &lt;- argv[3] #  &quot;how many go terms do you want to show&quot;
+num = as.numeric(num)
+DataF &lt;- argv[4] # &quot;data formate&quot;
+Gtype &lt;- argv[5] # 'barplot or Bubble'
+colormin &lt;- argv[6] # 'pvalue color'
+colormax &lt;- argv[7] # 'pvalue color'
+</code></pre>
+<p>下面是检查有没有你需要的包，没有的话安装</p>
+<pre><code class="language-R">if (!require('ggplot2')) install.packages('ggplot2')
+if (!require('dplyr')) install.packages('dplyr')
+if (!require('stringr')) install.packages('stringr')
+if (!require('magrittr')) install.packages('magrittr')
+library(ggplot2)
+library(dplyr)
+library(magrittr)
+library(stringr)
+</code></pre>
+<ul>
+<li>调试，我有个习惯，写完脚本会先拿示例数据在Rstudio中调试一下能不能跑明白，所以我保留了调试信息，最后记得（cmd+shift+c或者ctrl+shift+c把这段代码注释掉...）;然后会用Rscript 在终端下跑一遍...最后再打包，不然打包好，再拆了改代码特别蛋疼....</li>
+</ul>
+<p><strong>最后放一个批量读入文件的function</strong><br>
+当然大家有自己熟悉的方式，这里只是提供一个我习惯的解法...</p>
+<pre><code class="language-R">## readfile
+BatchReadTable = function(path, pattern,sep = &quot;\t&quot;, header = TRUE, quote = &quot;&quot;, stringsAsFactors = FALSE){
+  fileNames.raw &lt;- dir(path, pattern = pattern) 
+  filePath.raw &lt;- sapply(fileNames.raw, function(x){ 
+    paste(path,x,sep='/')})
+  data.raw &lt;- lapply(filePath.raw, function(x){
+    read.table(x, sep = sep,header = header,quote = quote,stringsAsFactors = FALSE)}) 
+  x = list(Name = fileNames.raw,
+           file = data.raw)
+  return(x)
+}
+## 批量读入文件
+raw = BatchReadTable(path = expfile,pattern = pattern, quote = NULL)
+## 输出
+rawdata = raw$file ## 输入富集分析文件
+rawname = gsub(pattern,&quot;&quot;,raw$Name) ## 去掉共有的Pattern就是每个文件剩下独有的特征字符串.这些rawnames会作为最后输出文件的特征
+
+</code></pre>
+<ul>
+<li>
+<p>function最后返回一个<code>list</code>, <code>list</code>包含两个内容</p>
+<ul>
+<li><code>Name</code>是文件名，后续会用<code>gsub</code>把你输入的<code>pattern</code>去掉，留下每个文件独有的特征字符串。这个字符串最后会被用作命名输出文件，或者图片的title等。</li>
+<li><code>file</code>也是一个list，里面包含了读入的文件。</li>
+</ul>
+</li>
+<li>
+<p>下面是输出的选项，分了3部分，第一部分根据你选择画图，第二部分根据最长的GO term或者KEGG Pathway确定输出图片的宽度，根据你挑选的输出的GO term数量确定高度生成图片的size。最后一部分输出图片。</p>
+</li>
+<li>
+<p>这里对list的取索引的操作就是<code>[[i]]</code></p>
+</li>
+</ul>
+<pre><code class="language-R">for (i in 1:length(rawdata)) {
+  x = rawdata[[i]]
+  y = rawname[i]
+  colnames(x)
+  if (DataF == &quot;TBtools_GO&quot;) {
+    out = GOBubblePlot(dataraw = x,
+                       num = num,
+                       name = y,
+                       colormin = colormin,
+                       colormax = colormax,
+                       Gtype = Gtype)
+  } else if (DataF == &quot;TBtools_KEGG&quot;) {
+    out = KEGGBubblePlot(dataraw = x,
+                         num = num,
+                         name = y,
+                         colormin = colormin,
+                         colormax = colormax,
+                         Gtype = Gtype)
+  } else if (DataF == &quot;customized&quot;) {
+    out = customBubblePlot(dataraw = x,
+                           num = num,
+                           name = y,
+                           colormin = colormin,
+                           colormax = colormax,
+                           Gtype = Gtype)
+  }
+  
+  figsize = function(y,num){
+    z = data.frame(ID = y,
+                   wc = 0)
+    
+    for (i in 1:nrow(z)) {
+      z[i,2] = nchar(as.character(z$ID[i]))
+    }
+    maxwc = max(z$wc)
+    if (maxwc &lt;= 50) {
+      figwidth = 10
+    } else if (maxwc &gt;50 &amp; maxwc &lt;100) {
+      figwidth = 12
+    } else {
+      figwidth = 15+(maxwc-50)/25
+    }
+    if (nrow(z) &lt;= 30) {
+      fighight = 10
+    } else if (nrow(z) &gt;30 &amp; nrow(z) &lt;60) {
+      fighight = 12
+    } else {
+      fighight = nrow(z)/4
+    }
+    size = list(figwidth = figwidth,
+                fighight = fighight)
+    return(size)
+  }
+  size = figsize(y = out$y,
+                 num = num)
+  
+  ggsave(filename = paste(rawname[i],DataF,Gtype,&quot;plot.pdf&quot;,sep = &quot;.&quot;),
+         plot = out$p,
+         width=size$figwidth,
+         height=size$fighight,
+         dpi = 300)
+  
+}
+</code></pre>
+<p>感觉工作就这么多啦，也挺简单的。菜鸟先抛转引玉，<br>
+<strong>坐等各位大佬贡献更牛批的TBtools插件！</strong></p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E5%A6%82%E4%BD%95%E5%8D%A1bug%E6%88%90%E5%8A%9F">如何卡Bug成功....</a></li>
+<li><a href="#%E6%8F%92%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8">插件的使用</a></li>
+<li><a href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%92%8C%E6%89%B9%E9%87%8F%E8%AF%BB%E5%85%A5">配置文件和批量读入</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://shawnwx2019.github.io/「TBtools-Plugin」Bubble-Plot升级版-TBtools插件/">
+              <h3 class="post-title">
+                「TBtools-Plugin」Bubble Plot升级版-TBtools插件
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://shawnwx2019.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

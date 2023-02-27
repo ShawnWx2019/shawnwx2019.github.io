@@ -1,0 +1,197 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>「R-Crawler」根据uniprot ID批量提取GO ID | Shawn&#39;s Bioinformatics Blog</title>
+<link rel="shortcut icon" href="https://shawnwx2019.github.io/favicon.ico?v=1677490078901">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://shawnwx2019.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="「R-Crawler」根据uniprot ID批量提取GO ID | Shawn&#39;s Bioinformatics Blog - Atom Feed" href="https://shawnwx2019.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="上次从uniprot网站用rvest提取了亚细胞定为的信息，这次还是冲uniprot用爬虫提取每个uniprotid对应的GOterm信息。
+...
+
+原理和收获
+这次又尝试了两个函数html_elements和html_attr
+之前直接..." />
+    <meta name="keywords" content="爬虫,R" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://shawnwx2019.github.io">
+  <img class="avatar" src="https://shawnwx2019.github.io/images/avatar.png?v=1677490078901" alt="">
+  </a>
+  <h1 class="site-title">
+    Shawn&#39;s Bioinformatics Blog
+  </h1>
+  <p class="site-description">
+    <font color=green>温故而知新</font>
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              「R-Crawler」根据uniprot ID批量提取GO ID
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-11-25
+              </span>
+              <span>
+                1 min read
+              </span>
+              
+                <a href="https://shawnwx2019.github.io/WI8rOT5yu/" class="post-tag">
+                  # 爬虫
+                </a>
+              
+                <a href="https://shawnwx2019.github.io/G_5eRHzJub/" class="post-tag">
+                  # R
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <p>上次从uniprot网站用rvest提取了亚细胞定为的信息，这次还是冲uniprot用爬虫提取每个uniprotid对应的GOterm信息。</p>
+<p>...</p>
+<!-- more -->
+<h2 id="原理和收获">原理和收获</h2>
+<p>这次又尝试了两个函数<code>html_elements</code>和<code>html_attr</code><br>
+之前直接粗暴的从<code>read_html</code>+<code>html_text</code>提取一堆信息，而这次则是有条理的查找，首先我们从edge（chrome）浏览器打开<a href="https://www.uniprot.org/uniprot/C0LGQ9">GOLGQ9</a>的信息，然后用开发者模式查看html代码,我们可以通过移动鼠标选择特定位置查看他对应网页元素，最终我们一层一层打开后发现我们需要的GO ID在</p>
+<pre><code class="language-html">&lt;div class = &quot;section&quot; id = &quot;function&quot;&gt;
+    &lt;ul class = noBumbering xxx&gt;
+        &lt;li class=&quot;GOxxx&quot;&gt;
+            &lt;a href=&quot;http://url&quot;...&gt;
+</code></pre>
+<p>当然除了BP应该还有CC，MF。 所以思路就是定位到<br>
+<img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/20211129094658.png" alt="" loading="lazy"></p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E5%8E%9F%E7%90%86%E5%92%8C%E6%94%B6%E8%8E%B7">原理和收获</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://shawnwx2019.github.io/「R-Crawler」根据uniprot-ID批量检测基因的亚细胞定位/">
+              <h3 class="post-title">
+                「R-Crawler」根据uniprot ID批量检测基因的亚细胞定位
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://shawnwx2019.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

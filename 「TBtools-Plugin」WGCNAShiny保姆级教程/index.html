@@ -1,0 +1,344 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>「鸽王之王」WGCNAShiny保姆级教程 | Shawn&#39;s Bioinformatics Blog</title>
+<link rel="shortcut icon" href="https://shawnwx2019.github.io/favicon.ico?v=1677490078901">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://shawnwx2019.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="「鸽王之王」WGCNAShiny保姆级教程 | Shawn&#39;s Bioinformatics Blog - Atom Feed" href="https://shawnwx2019.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="原本以为毕业了就起飞了，没想到，喵的比没毕业还累...
+又鸽了仨月，这个小插件到时完善了不少，但是上次承诺的视频还是没有录。原因不说了，准备手打！ 还是写个教程为好。录视频，怕是要不知何年何月了...
+对比大佬的下班时间发现，忙从来不是借口..." />
+    <meta name="keywords" content="TBtools插件,R" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://shawnwx2019.github.io">
+  <img class="avatar" src="https://shawnwx2019.github.io/images/avatar.png?v=1677490078901" alt="">
+  </a>
+  <h1 class="site-title">
+    Shawn&#39;s Bioinformatics Blog
+  </h1>
+  <p class="site-description">
+    <font color=green>温故而知新</font>
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              「鸽王之王」WGCNAShiny保姆级教程
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-09-23
+              </span>
+              <span>
+                18 min read
+              </span>
+              
+                <a href="https://shawnwx2019.github.io/e996CuUk8/" class="post-tag">
+                  # TBtools插件
+                </a>
+              
+                <a href="https://shawnwx2019.github.io/G_5eRHzJub/" class="post-tag">
+                  # R
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <p>原本以为毕业了就起飞了，没想到，喵的比没毕业还累...<br>
+又鸽了仨月，这个小插件到时完善了不少，但是上次承诺的视频还是没有录。原因不说了，准备手打！ 还是写个教程为好。录视频，怕是要不知何年何月了...</p>
+<p>对比大佬的下班时间发现，忙从来不是借口，懒才是....</p>
+<!-- more -->
+<p>本文只是对WGCNAShiny软件使用的介绍，关于WGCNA原理建议阅读文献，简书知乎B站各位大佬也有讲解，我自己并没有把握讲清楚。下面放一个生信技能树的原理讲解，推荐大家花点时间看一下。有能力的跟着操作一遍加深理解。关于结果怎么看，这个听别人讲听不明白，多看几篇文献就搞清楚了。</p>
+<p><a href="https://www.bilibili.com/video/BV1584y1F7pw?from=search&amp;seid=2638791580096845062&amp;spm_id_from=333.337.0.0">生信技能树-WGCNA原理与实践part1 </a></p>
+<p><a href="https://www.bilibili.com/video/BV1tf4y1s7fy?from=search&amp;seid=2638791580096845062&amp;spm_id_from=333.337.0.0">生信技能树-WGCNA原理与实践part2</a></p>
+<p><a href="https://elifesciences.org/articles/29655">elife-WGCNA经典文献</a></p>
+<p>篇幅太长 就不扯淡了</p>
+<h2 id="怎么安装">怎么安装</h2>
+<p><strong>方法一：</strong> 对于熟练使用R和Rstudio的老铁们，而且遇见报错能通过google，Stack Overflow等途径自己搞定的同学，直接去我的<a href="https://github.com/ShawnWx2019/WGCNA-shinyApp">github仓库</a> 克隆到本地或者直接下载<code>WGCNAbyClick.v1.R</code>脚本。然后用Rstudio打开，点击下图中位置的<code>RunApp</code>直接运行，如果你运气好，直接就装上了，然后弹出网页就可以直接做了，但大概率你运气会不太好，底下一堆报错，然后就靠你自己的本事debug把没有装上的包装上了，我的锅，为了让这个shinyapp更好用，调了一堆奇葩包。😂 <strong>「友情提示」：务必将你的R升级到4.1！！！！</strong><br>
+<img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/WGCNA2.jpg" alt="" loading="lazy"></p>
+<p><strong>方法二：</strong> 如果你不想折腾，就用TBtools插件安装吧！！CJ大佬为了帮大家搞定包安装专门开发了R Plugin Installer Helper插件！由于我太菜了，😭目前WGCNAShiny的<code>meta-package</code>木有搞出来，不过很快会向大家见面。使用方法:<a href="https://mp.weixin.qq.com/s/NcdoZZUA99qxnBFXYjG4qw"><strong>生信药丸 解决方案！TBtools R Plugin 安装~ 终极奥义</strong></a></p>
+<h2 id="更新内容">更新内容</h2>
+<p>和之前的<code>OneStepWGCNA插件</code>相比确实改变了很多，开放和更多的参数，也使大家体验一下调参侠的日常，<code>WGCNAshiny</code>推出后我考虑要下架<code>OneStepWGCNA</code>因为他不够<strong>智能</strong>，很可能一些数据格式或者设置的错误会导致错误的结果。</p>
+<ul>
+<li>☆☆☆☆ 保留了极低表达量筛选的步骤，这个根据<a href="https://horvath.genetics.ucla.edu/html/CoexpressionNetwork/Rpackages/WGCNA/faq.html">WGCNA-FAQ</a>(对于所有想做WGCNA分析的同学，不管你会不会敲代码，这个真的推荐所有人看一遍，即使你不看WGCNA的原文，WGCNA tutorials，这个还是非常值得看一下的。因为你头顶很多问号这里面都给你掰扯明白了)</li>
+<li>☆ 增加了数据变异程度筛选方法<code>var</code>,可以选择通过绝对中位差（MAD）筛还是变异系数（Var）筛。</li>
+<li>☆ 增加了原始数据格式防呆，比如有NA啦，有非数字形式的字符串啦。</li>
+<li>☆☆☆☆☆ 增加了sft的自由选择，这次直接把软阈值的选择权利完全放给你，可以通过软阈值计算结果自由选择，而不是在选择不到合适的软阈值时强行使用经验的软阈值。</li>
+<li>☆☆☆☆☆ 增加了当前软阈值下网络的non-scale检测。</li>
+<li>☆☆☆☆☆☆ 放开了<code>MaxBlockSize</code>参数，这样就可以摆脱电脑内存大小的限制，可以加入更多的基因进行WGCNA分析，不过如果硬件条件允许的情况下尽量把所有的基因放到一个block计算。</li>
+<li>☆☆☆☆☆☆ 放开了<code>minModuleSize</code>和<code>mergeCutHeight</code>参数, 这样你就可以灵活的调整模块大小和模块数量。</li>
+<li>☆☆☆☆☆☆ 用<code>ggplot</code>重画了WGCNA主要的图，修正了上一个shinyapp版本的一个错误。</li>
+<li>☆☆☆☆☆☆ 用<code>ComplexHeatmap</code>画<strong>module-trait</strong>图，放开了颜色选择，可以根据自己的喜好调整颜色，毕竟颜值即正义。</li>
+<li>☆☆☆☆☆☆ 用<code>updateSelectInput</code>升级了之前手动填写module，trait的智障操作，现在可以根据module-trait的结果自动升级后续感兴趣模块性状和模块名字，直接选择就好。</li>
+<li>☆☆☆☆☆☆☆☆☆☆☆☆ 完善了WGCNA后续分析板块：hubgene筛选和cytoscape网络图数据导出。</li>
+</ul>
+<h2 id="准备工作">准备工作</h2>
+<p><strong>首先建议所有用户折腾下这个：</strong><a href="http://www.shawnlearnbioinfo.top/2021/03/11/%E3%80%8CTBtools-Plugin%E3%80%8D%E4%BD%BF%E7%94%A8openBLAS%E6%88%96Apple-s-BLAS%E6%98%AF%E4%BD%A0%E7%9A%84R%E7%9F%A9%E9%98%B5%E8%BF%90%E7%AE%97%E9%80%9F%E5%BA%A6%E8%B5%B7%E9%A3%9E/">BLAS加速矩阵运算</a><br>
+简单总结就是windows先去<a href="http://pan.baidu.com/s/1gdow6sz">这里下载文件</a>，然后把这些文件复制到你R路径下比如</p>
+<pre><code class="language-r">C:\Program Files\R\R-4.1\bin\x64
+</code></pre>
+<p>文件夹中，覆盖掉原来的文件。<br>
+mac用户根据我博客那篇文章操作就好，linux用户直接搜索linux怎么装<code>openblas</code>，跟着操作就ok啦。如果不替换<code>BLAS</code>，你会发现WGCNA跑得非常非常慢！因为系统自带的BLAS矩阵处理速度太拉胯了.....</p>
+<p><strong>其次，基因名称最好不要是数字，材料名称也不要以数字开头,材料名称中有'-'号，转换成下划线'_'或者'.'同时最好不要有各种奇葩符合，中文空格等。</strong> 有几个老铁发邮件问我老跑不出来，结果发现是这些问题，建议你们自己做的时候发现<code>geneid</code>是纯数字的时候，自己新建一个excel做一个类似这个的表，然后用后面符合规则的基因名字和样品名称替代你上传的表达矩阵中的<code>geneid</code>和<code>samplename</code>。具体为啥有空再讲。<br>
+<img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/wgcna.jpg" alt="" loading="lazy"></p>
+<p><strong>界面上的所有步骤请一步一步来，不要直接跳过步骤做后面，因为后面所有的步骤都是基于前面所有结果才能运行的</strong></p>
+<p><strong>我自己承认这个shinyapp的操作可能有点反人类，毕竟不是商业软件会考虑到易用性，是根据我的思维模式来的，所以这里也没办法，只能你适应我，做不到我适应你</strong></p>
+<h2 id="使用方法">使用方法</h2>
+<h3 id="第一步-数据上传和数据清洗">第一步 数据上传和数据清洗</h3>
+<p>手头没有数据的同学可以从<a href="https://gitee.com/shawnmagic/swtbplugin/tree/master/02.testfile/03.OneStepWGCNA">这里下载demo数据</a><br>
+遵循图中7个步骤，每个步骤都有默认的参数，如果你不想改动可以不动他，需要再改动。<br>
+<img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/WGCNA4.jpg" alt="" loading="lazy"><br>
+点击升级信息后会出现一个小进度条，显示进度，<strong>如果屏幕变灰了说明报错了</strong> 可能的原因就是你输入的文件有问题，或者想保留的基因数大于你总基因数之类的。<br>
+<img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/WGCNA6.jpg" alt="" loading="lazy"></p>
+<p>看到进化树后，恭喜你，<strong>你的数据清洗步骤完成了！</strong>，可以点击下面的download下载nwk文件，这个文件就可以用<code>figtree</code>，<code>itol</code>等工具美化了，而且这个树下面有个小三角，可以随意拖动改变图的大小。如果在这个树中你发下个别离群样本，就是几个样品和其他样品分的很开,比如第二个图中的<code>F2_221</code>，就用excel打开你的表达量矩阵，对应删掉这个样品所在的列,重新上传。同样在<code>trait</code>表中也删掉这个样品。如果要重新上传表达量数据，刷新一下网页就好了，运行开后如果遇见也没变灰，说明报错了，此后后面的步骤就不能运行了，这时候刷新下网页也能恢复到初始状态，不过你就要从头开始了。<br>
+<img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/WGCNA11.jpg" alt="" loading="lazy"></p>
+<p><img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/WGCNA10.jpg" alt="" loading="lazy"><br>
+接下来就可以点击导航栏的<code>SFT and Power Select</code>进入下一步软阈值筛选步骤了！</p>
+<h3 id="软阈值筛选和网络无标度鉴定">软阈值筛选和网络无标度鉴定</h3>
+<p>选择合适的软阈值（sft 或者 power）对于构建无标度网络来说至关重要，往往无法筛选出合适软阈值的原因和你输入的表达矩阵直接相关，最常见的原因就是样品异质性，比如说不同组织（器官），差别很大的发育时期等，或者有明显批次效应的样品，比如网上down的不同测序平台，不同文献来源的RNAseq数据合并一起。具体解决方案还是看<a href="https://horvath.genetics.ucla.edu/html/CoexpressionNetwork/Rpackages/WGCNA/faq.html">WGCNA-FAQ</a> 我说的没作者明白....</p>
+<p>选择<code>SFT and Power Select</code>标签页（当时脑抽随便起的名字懒得改了），就是软阈值筛选的意思，我设定的默认<code>R2</code>是0.8，不过有篇中文文献（忘记哪个了，具体大家可以知网搜一下）说R2到0.85时对应的软阈值构建的网络接近无标度网络，但是<code>power</code>值越大，假阳性越高。所以尽量选择第一次到达0.8时对应的<code>power</code>值。选择好<code>R2</code>的cutoff后点击<code>start analysis</code>就可以了，这里的R2阈值指的是让软件判断当R2等于xx是对应的<code>power</code>是多少。如果你选择0.85，执行这个步骤后就会生成一个第一次<code>R2 ≥ 0.8</code>时对应的<code>power</code>值。 具体看下图2</p>
+<figure data-type="image" tabindex="1"><img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/WGCNA9.jpg" alt="" loading="lazy"></figure>
+<p>该图就是点击<code>start analysis</code>运行完成之后的界面，会返回一个图，左边是<code>power</code>和<code>R2</code>的关系，右边是<code>power</code>和平均连连接度（Mean connectivity）之间的关系，<code>R2</code>越接近1,平均连接度越接近0，网络越接近无标度。<br>
+这次结果我设定的<code>R2</code>阈值是0.8，对应的<code>Power</code>值是5，屏幕中会出现</p>
+<pre><code class="language-R">The power recommended by WGCNA is : 5
+</code></pre>
+<p>，说明在<code>power</code>等于5时，<code>R2≥0.8</code>，但是我们发下你当<code>Power</code>等于7时<code>R2</code>可以达到0.9，这是如果我们想选择<code>power = 7</code>只需要把<code>Power type</code>里面改成<code>customized</code>,然后滑动下面滑块到7就可以了，这一步是为后续<code>scale free estimate</code>设计的。同样在<code>set fig size</code>之后可以下载到pdf格式的图片，win下网页中预览的字体可能有点丑，渲染问题，但是下载下来就没问题了。图片的大小同样可以通过拖动三角形调节。</p>
+<figure data-type="image" tabindex="2"><img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/WGCNA12.jpg" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/WGCNA13.jpg" alt="" loading="lazy"></figure>
+<p>第三部分是对你选择的<code>power</code>所构建的网络进行无标度拓扑结构检测的，看在这个<code>power</code>值下构建的网络是否符合无标度网络。我们首先对<code>R2=0.8</code>对应的<code>power = 5</code>进行检测这时<code>Power Type</code>选择<code>Recommended</code>系统使用刚才自动生成的<code>power</code>值5,具体无标度网络（无尺度网络）和随机网络的区别我推荐生信技能树的视频中有讲解，当然你数学学的好也能理解（数学学渣撸过）..</p>
+<p>这里你可以测试所有Power值构成的网络，但是不推荐你这么玩，因为每次都要重新构建网络，这个速度还是很慢的，一般第一个图<code>R2</code>最高能到多少你就检测对应的<code>power</code>，但是不建议选择太大的<code>power</code>，会造成假阳性，<strong>这个一般是在实在选择不到合适的软阈值，最高只有0.5，0.6之类的，不过这种数据一般也不会构成无标度网络，后续再去做共表达分析意义不是很大，但是这时你可以把WGCNA简单的当做类似Hclust或者K-means来用，直到表达模块分类之前都是可以用的，看你提供的基因到底可以分为多少个module，这些module内的基因是具有相似表达模式的。而后续的hubgene，调控网络就别做了，意义不大</strong><br>
+<img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/WGCNA14.jpg" alt="" loading="lazy"><br>
+<img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/WGCNA15.jpg" alt="" loading="lazy"></p>
+<p><strong>检测这一步必须进行，因为我写的脑残设定后续使用的power就是最后一次检测时你用的power，如果你不检测，没有power值。后续会报错。</strong></p>
+<p>这里我们用<code>R2</code>第一次大于0.9时对应的<code>power</code>值7进行后续测试。</p>
+<h3 id="构建模块">构建模块</h3>
+<p>点击最上面<code>module-net</code>标签进入模块构建步骤。这里仍旧使用一步法构建模块，而且释放了3个关键参数用来调整模块数量，并且在CJ大佬的指点下开放了<code>MaxBlockSize</code>参数来使低内存的PC也能跑上万+基因。<strong>请按照下表填写这里的数字，这里只能填整数！！！！！</strong> 具体我也没有测试过，可能会报内存溢出的错误，报错了就吧数字调小点再来亿遍！（鬼知道我测试这玩意重跑了多少回...）<br>
+<strong>tips:</strong> 如果你的pc内存足够大，尽量把所有你选择做WGCNA的基因都放到一个<code>block</code>中。比如你之前选择了2w个做，你的pc内存又大于等于16G，这里就选2w，如果内存溢出了就搞个1.5w也行。</p>
+<table>
+<thead>
+<tr>
+<th>内存大小</th>
+<th>数字</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0-4GB</td>
+<td>5000-8000</td>
+</tr>
+<tr>
+<td>4-8GB</td>
+<td>8000-12000</td>
+</tr>
+<tr>
+<td>8-16GB</td>
+<td>12000-20000</td>
+</tr>
+<tr>
+<td>16-32GB</td>
+<td>20000-40000</td>
+</tr>
+<tr>
+<td>&gt; 32GB</td>
+<td>土豪你好，请随意</td>
+</tr>
+</tbody>
+</table>
+<p>整体步骤就是确定最小模块内基因数，确定剪枝高度（推荐不用动这俩参数）然后根据电脑内存大小选择好blocksize之后点击运行。如果模块数量太多了，可以适当提高前面两个参数。比如这次结果产生了很多模块，我们尝试把<code>min module size</code> 提高到<code>50</code>，把剪枝高度提高到<code>0.35</code><br>
+<img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/WGCNA16.jpg" alt="" loading="lazy"></p>
+<p>结果显示模块总数少了，<code>min Module Size</code>的变大必然导致<code>grey</code>模块基因数量的增加。同时模块数量的变少可能会导致<code>module-trait</code>相关性变低。因为这种剪枝高度的提高可能会导致模块划分更加粗放。<br>
+<img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/WGCNA17.jpg" alt="" loading="lazy"></p>
+<p>对比上面图显然模块数量变少了。第二个选项卡是邻接基因构建的相关性热图<br>
+<img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/WGCNA18.jpg" alt="" loading="lazy"></p>
+<p><strong>第三个选项卡是一个很重要的结果，模块-基因的对应关系表</strong> 可以下载下来，同样是点击download下载。<br>
+<img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/WGCNA19.jpg" alt="" loading="lazy"></p>
+<p>module构建完毕之后，就是和性状，材料分类，或者其他你感兴趣的数据做相关性分析。</p>
+<h3 id="模块-表型相关性分析">模块-表型相关性分析</h3>
+<p>具体表型数据的格式参考<a href="https://gitee.com/shawnmagic/OneStepWGCNA">这个链接</a> 由于代码里默认之后两列的表型数据表会转换成分类的0，1矩阵，所以想只和一个性状做关联的我写的这个shiny做不了.... 后续可能会改把。</p>
+<p>这里可以直接跑，也可以自己选择颜色后在跑</p>
+<figure data-type="image" tabindex="4"><img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/WGCNA21.jpg" alt="" loading="lazy"></figure>
+<p>我们发现demo数据中<code>Luminal</code>和<code>yellow</code>模块成极显著负相关和<code>blue</code>模块成极显著正相关。所以后续会分析这个性状和对应模块的关系。<br>
+<img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/WGCNA22.jpg" alt="" loading="lazy"><br>
+第二个选项卡是具体的画图数据，就是邻接基因和对应性状之间的相关性及显著性值。<br>
+第三个选项卡非常重要，里面是基因的模块内连接度（kME），我们单纯从module角度出发kME越高，说明该基因在模块内越处于中心位置，可以被选为<code>hubgene</code>。如果你的<code>module-trait</code>结果不理想，也没必要非得死磕，换一个角度对所有的<code>module</code>做富集分析，看这些模块哪个可以解释你的科学问题，对应的根据<code>kME</code>筛选出<code>hubgene</code>（排名前10，或者 &gt; 0.9）,然后围绕<code>hubgene</code>构建该模块的共表达网络。这时你把这个表下载下来，选择对应模块排序找出<code>kME</code>排名靠前的基因拟定为<code>hubgene</code>即可。<br>
+<img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/WGCNA23.jpg" alt="" loading="lazy"></p>
+<p>我们从<code>module-trait</code>找到感兴趣的模块和性状后可以进行后续<code>interested module</code>步骤</p>
+<h3 id="感兴趣模块信息挖掘">感兴趣模块信息挖掘</h3>
+<p>首先是看基因显著性（GS gene significance）和模块特征值（MM module membership）之间的关系，如何理解基因显著性，我们在做module-trait时起始是用的该模块降维后的第一主成分或者叫邻接基因与表型做的相关，但是这个模块中有很多基因，邻接基因和表型相关不一定代表模块中所有基因都和表型相关，所以为了验证模块内基因与表型相关性，直接去做这个基因与表型的相关得到基因显著性（GS），同时我们看这个基因和邻接基因之间的关系也就是该基因模块内连接度（kME）来反映该基因的模块特征值（MM），当该基因既在模块中处于网络中心地位，又显著与性状相关，那么该基因极有可能是控制该性状的<code>hubgene</code>。<br>
+操作很简单，beta版本的用户可能知道这里之前需要纯手动输入，现在不需要了，只要前面<code>module-trait</code>的结果作完，这里相应的选项会更新。只需要点击选择即可。<br>
+<img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/WGCNA24.jpg" alt="" loading="lazy"></p>
+<p>然后我们会看模块内所有基因的表达模式热图，而下部柱状图表示邻接基因的表达模式。</p>
+<figure data-type="image" tabindex="5"><img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/WGCNA25.jpg" alt="" loading="lazy"></figure>
+<p>下图表示你选择的表型和其他所有模块的<code>GS vs MM</code>关系<br>
+<img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/WGCNA26.jpg" alt="" loading="lazy"></p>
+<p>我们对感兴趣模块探索完就可以进行下一步<code>hubgene</code>筛选过程了。</p>
+<h3 id="hubgene筛选和共表达网络关系输出">hubgene筛选和共表达网络关系输出</h3>
+<p>我们点击<code>hubgene</code>选项卡同样是选择好<code>trait</code>和<code>module</code>点击开始分析</p>
+<p>第一个选项卡给的hubgene 一般不推荐.. 这个是同过WGCNA作者的一个function实现的，但是往往感觉GS和MM都很低...</p>
+<p>第二个选项卡是基于GS和MM筛选的<br>
+如果你的<code>module-trait</code>中出现了R &gt; 0.8的模块甚至0.9的模块，这时可以适当的把阈值卡严格一点，比如<br>
+<code>|GS| &gt; 0.85 &amp; |MM| &gt; 0.9</code><br>
+来筛选hubgene，但是如果像本次demo数据一样，只有0.7左右或者更低，卡如此严格的阈值很可能筛选不到hubgene，这样就可以适当降低阈值。这里的阈值并没有一个金标准，当然越严格说明设计越合理，参数越准确。 如果发现这种情况，可以返回<code>module-net</code>步骤，降低剪枝高度，缩小最小模块大小参数，让模块划分更加精细，再试一下。<br>
+<img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/WGCNA27.jpg" alt="" loading="lazy"></p>
+<p><img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/WGCNA28.jpg" alt="" loading="lazy"><br>
+其实和你做湿实验一样，对于不同的材料，不同的仪器要灵活调整配方，仪器参数，如果老用default，很可能做不出来，这也是调参侠的日常，我们的目的是解决生物学问题，而不是死磕所谓的金标准。当然调整是否合理，这需要大量的实践和你对WGCNA背后算法的理解深度，这个无捷径可走，所以真的要做好WGCNA分析还是需要下功夫读点文献，多做几次尝试的。</p>
+<p>最后一部分就是输出共表达网络关系，用<code>cytoscape</code>作图了</p>
+<p>操作也很简单，选一个阈值（建议不要大于0.1）点击开始下面就会出现edgefile 和nodefile的预览，具体权重阈值怎么选，选多少，我的建议是你自己选选看，default是0.02. 这个也没有标准。预览表出来后向下拉就可以下载nodefile 和edgefile了，然后就是cytoscape的事了，具体怎么可视化，B站教学一大堆，加油吧少年！</p>
+<figure data-type="image" tabindex="6"><img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/WGCNA29.jpg" alt="" loading="lazy"></figure>
+<h2 id="终于写完了">终于写完了！！</h2>
+<p>后续大概率会直接写个R包，更新一些内容，希望各位及时反馈软件的问题到我的gitee issue<br>
+目前先在这个issue下吧 ：https://gitee.com/shawnmagic/swtbplugin/issues/I2DMHS<br>
+各位大佬如果有好的建议也提一下，如果发现有错误请及时提醒我，用的人多了才能更好的完善。</p>
+<p>通过WGCNAshiny的开发我第一次深度接触shinyApp的编写，开启了我对R包编写的兴趣，并且把function打成了R package放在 https://github.com/ShawnWx2019/WGCNAShinyFun/tree/master</p>
+<p>虽然app和package写的都很辣眼睛，但我学到了更多知识，不断突破自己。作为副产品这个小脚本小插件或许会为方便各位，这就足够了，由于本人太菜怕自己的错误导致大家的分析出错，所以这个插件还是以一个beta版本出现，这需要大家共同努力积极反馈才能使这个小玩意更加完善。</p>
+<p>半条命已经废了...<br>
+没时间扯淡了... 干活去了😭<br>
+祝各位磕盐顺利！！</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E6%80%8E%E4%B9%88%E5%AE%89%E8%A3%85">怎么安装</a></li>
+<li><a href="#%E6%9B%B4%E6%96%B0%E5%86%85%E5%AE%B9">更新内容</a></li>
+<li><a href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C">准备工作</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95">使用方法</a>
+<ul>
+<li><a href="#%E7%AC%AC%E4%B8%80%E6%AD%A5-%E6%95%B0%E6%8D%AE%E4%B8%8A%E4%BC%A0%E5%92%8C%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97">第一步 数据上传和数据清洗</a></li>
+<li><a href="#%E8%BD%AF%E9%98%88%E5%80%BC%E7%AD%9B%E9%80%89%E5%92%8C%E7%BD%91%E7%BB%9C%E6%97%A0%E6%A0%87%E5%BA%A6%E9%89%B4%E5%AE%9A">软阈值筛选和网络无标度鉴定</a></li>
+<li><a href="#%E6%9E%84%E5%BB%BA%E6%A8%A1%E5%9D%97">构建模块</a></li>
+<li><a href="#%E6%A8%A1%E5%9D%97-%E8%A1%A8%E5%9E%8B%E7%9B%B8%E5%85%B3%E6%80%A7%E5%88%86%E6%9E%90">模块-表型相关性分析</a></li>
+<li><a href="#%E6%84%9F%E5%85%B4%E8%B6%A3%E6%A8%A1%E5%9D%97%E4%BF%A1%E6%81%AF%E6%8C%96%E6%8E%98">感兴趣模块信息挖掘</a></li>
+<li><a href="#hubgene%E7%AD%9B%E9%80%89%E5%92%8C%E5%85%B1%E8%A1%A8%E8%BE%BE%E7%BD%91%E7%BB%9C%E5%85%B3%E7%B3%BB%E8%BE%93%E5%87%BA">hubgene筛选和共表达网络关系输出</a></li>
+</ul>
+</li>
+<li><a href="#%E7%BB%88%E4%BA%8E%E5%86%99%E5%AE%8C%E4%BA%86">终于写完了！！</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://shawnwx2019.github.io/「TBtools-Plugin」用shinyApp体验调参侠的日常工作-WGCNA-shiny尝鲜版/">
+              <h3 class="post-title">
+                「TBtools-Plugin」用shinyApp体验调参侠的日常工作-WGCNA shiny尝鲜版
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://shawnwx2019.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

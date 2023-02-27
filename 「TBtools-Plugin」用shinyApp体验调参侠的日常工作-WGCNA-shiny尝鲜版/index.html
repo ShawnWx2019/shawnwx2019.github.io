@@ -1,0 +1,223 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>「TBtools-Plugin」用shinyApp体验调参侠的日常工作-WGCNA shiny尝鲜版 | Shawn&#39;s Bioinformatics Blog</title>
+<link rel="shortcut icon" href="https://shawnwx2019.github.io/favicon.ico?v=1677490078901">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://shawnwx2019.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="「TBtools-Plugin」用shinyApp体验调参侠的日常工作-WGCNA shiny尝鲜版 | Shawn&#39;s Bioinformatics Blog - Atom Feed" href="https://shawnwx2019.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="失踪人口回归... 鸽了近半年，终于又要更新推文了...
+上次说过要把WGCNA后续的模块整理完成。这个工作其实过年的时候就做的差不多了，只是没有写成插件释放。前两天啃了些资料怎么制作R包，然后把我自己搞的辣眼睛的function打包了放在..." />
+    <meta name="keywords" content="WGCNA,TBtools插件,R" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://shawnwx2019.github.io">
+  <img class="avatar" src="https://shawnwx2019.github.io/images/avatar.png?v=1677490078901" alt="">
+  </a>
+  <h1 class="site-title">
+    Shawn&#39;s Bioinformatics Blog
+  </h1>
+  <p class="site-description">
+    <font color=green>温故而知新</font>
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              「TBtools-Plugin」用shinyApp体验调参侠的日常工作-WGCNA shiny尝鲜版
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-06-16
+              </span>
+              <span>
+                3 min read
+              </span>
+              
+                <a href="https://shawnwx2019.github.io/1gwqOzUkvu/" class="post-tag">
+                  # WGCNA
+                </a>
+              
+                <a href="https://shawnwx2019.github.io/e996CuUk8/" class="post-tag">
+                  # TBtools插件
+                </a>
+              
+                <a href="https://shawnwx2019.github.io/G_5eRHzJub/" class="post-tag">
+                  # R
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <p>失踪人口回归... 鸽了近半年，终于又要更新推文了...<br>
+上次说过要把WGCNA后续的模块整理完成。这个工作其实过年的时候就做的差不多了，只是没有写成插件释放。前两天啃了些资料怎么制作R包，然后把我自己搞的辣眼睛的function打包了放在github。然后这个WGCNA的插件才顺利诞生，没有难产。</p>
+<p>...</p>
+<!-- more -->
+<h2 id="插件安装">插件安装</h2>
+<p>目前可以在我的<a href="https://gitee.com/shawnmagic/swtbplugin/tree/master/01.plugin">gitee仓库</a>下载，后续会在高速插件商店上架，到时候直接在软件内下载即可。<br>
+这个插件安装比较麻烦，因为依赖太多了！！！ <code>shiny</code>相关的，<code>WGCNA</code>相关,<code>tidyvers</code>家族。还有我写的那个辣眼睛的插件专用函数包<a href="https://github.com/ShawnWx2019/WGCNAShinyFun/tree/master">github地址</a>。<br>
+如果不用插件的话，可以去<a href="https://github.com/ShawnWx2019/WGCNA-shinyApp">WGCNA-shinyApp</a>下载脚本，在Rstudio中运行，或者在terminal中</p>
+<pre><code class="language-R">Rscript WGCNAbyClick.v1.R
+</code></pre>
+<p>直接运行Shiny App</p>
+<h3 id="安装时报错解决方案">安装时报错解决方案</h3>
+<ul>
+<li>校园网的话大概率会出现网络问题，我在家装插件就没遇见过问题😭，但是在所里就老出错，老样子，连热点，换wifi啥的多试几次</li>
+<li>目前发现第一次安装多少会出现点问题，但是多装几次就ok了。</li>
+<li>xfun版本问题，静等清华镜像更新。</li>
+<li>xxx退出状态不是0，可能是包版本和R版本的冲突。这个动手能力强的话可以自行百度解决。</li>
+<li>【谨慎操作】各种方法都没法搞定，各种奇葩报错的话，可能是一些奇怪操作把TBtools的R环境给搞凌乱了。win用户可以进c盘下的用户文件夹，选择你当前用户名的文件夹可以看见一个<code>.TBtools</code>的文件进去后删掉Rserver文件夹，这样你TBtools中R环境就删掉了，重新再群里下载Rserver插件重新安装，安装好后再安装其他基于R的插件。mac用户插件在<code>~/.TBtools/.plugin</code><strong>这么操作的话你之前装的基于R的插件会重新安装依赖包，所以谨慎操作</strong></li>
+</ul>
+<h2 id="准备工作">准备工作</h2>
+<p>建议按照<a href="http://www.shawnlearnbioinfo.top/2021/03/11/%E3%80%8CTBtools-Plugin%E3%80%8D%E4%BD%BF%E7%94%A8openBLAS%E6%88%96Apple-s-BLAS%E6%98%AF%E4%BD%A0%E7%9A%84R%E7%9F%A9%E9%98%B5%E8%BF%90%E7%AE%97%E9%80%9F%E5%BA%A6%E8%B5%B7%E9%A3%9E/">BLAS加速R矩阵计算</a>帖子加速R的矩阵运算速度，可以将<code>WGCNA</code>在计算TOM矩阵的速度提高100倍。如果不这么搞，可能你计算10000个基因的WGCNA需要等上40分钟-1小时，如果用强化版的blas，也就一分钟出结果。</p>
+<h2 id="插件结构">插件结构</h2>
+<p><img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/WGCNA%20Shiny.png" alt="" loading="lazy"><br>
+大体还和之前OneStepWGCNA的一样，多了后续的分析，更有助于hubgene的挖掘。</p>
+<h2 id="使用方法">使用方法</h2>
+<p>插件安装完成后运行会弹出网页。<br>
+<img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/20210616182425.jpg" alt="" loading="lazy"><br>
+这个后续录个视频讲吧... 如果截屏写博客估计累死....</p>
+<h2 id="最后have-fun">最后have fun</h2>
+<p>ps： 正在鼓捣final cut pro. 后续会有详细视频讲解。目前大家先安装上玩玩吧.<br>
+估计有会鸽一段时间。等尘埃落定，一定在会完善他！</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85">插件安装</a>
+<ul>
+<li><a href="#%E5%AE%89%E8%A3%85%E6%97%B6%E6%8A%A5%E9%94%99%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88">安装时报错解决方案</a></li>
+</ul>
+</li>
+<li><a href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C">准备工作</a></li>
+<li><a href="#%E6%8F%92%E4%BB%B6%E7%BB%93%E6%9E%84">插件结构</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95">使用方法</a></li>
+<li><a href="#%E6%9C%80%E5%90%8Ehave-fun">最后have fun</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://shawnwx2019.github.io/「TBtools-Plugin」批量生成气泡图/">
+              <h3 class="post-title">
+                「TBtools Plugin」批量生成气泡图
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://shawnwx2019.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

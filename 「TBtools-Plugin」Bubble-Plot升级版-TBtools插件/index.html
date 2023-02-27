@@ -1,0 +1,254 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>「TBtools-Plugin」Bubble Plot升级版-TBtools插件 | Shawn&#39;s Bioinformatics Blog</title>
+<link rel="shortcut icon" href="https://shawnwx2019.github.io/favicon.ico?v=1677490078901">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://shawnwx2019.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="「TBtools-Plugin」Bubble Plot升级版-TBtools插件 | Shawn&#39;s Bioinformatics Blog - Atom Feed" href="https://shawnwx2019.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="写在前面的废话
+之前有老铁在群里问kegg的气泡图能不能整，其实基于TBtools-kegg富集结果的气泡图代码很早就撸好了，无非就是GO气泡图代码中数据清洗的时候改改df索引位置。后面一毛一样。
+大家好像还是比较喜欢这种视觉冲击力强的图，..." />
+    <meta name="keywords" content="TBtools,插件,富集分析" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://shawnwx2019.github.io">
+  <img class="avatar" src="https://shawnwx2019.github.io/images/avatar.png?v=1677490078901" alt="">
+  </a>
+  <h1 class="site-title">
+    Shawn&#39;s Bioinformatics Blog
+  </h1>
+  <p class="site-description">
+    <font color=green>温故而知新</font>
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              「TBtools-Plugin」Bubble Plot升级版-TBtools插件
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-01-26
+              </span>
+              <span>
+                3 min read
+              </span>
+              
+                <a href="https://shawnwx2019.github.io/7IQ4dQhrNC/" class="post-tag">
+                  # TBtools
+                </a>
+              
+                <a href="https://shawnwx2019.github.io/fdXt7u8Hl5/" class="post-tag">
+                  # 插件
+                </a>
+              
+                <a href="https://shawnwx2019.github.io/juU6QRjoHA/" class="post-tag">
+                  # 富集分析
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <h2 id="写在前面的废话">写在前面的废话</h2>
+<p>之前有老铁在群里问kegg的气泡图能不能整，其实基于TBtools-kegg富集结果的气泡图代码很早就撸好了，无非就是GO气泡图代码中数据清洗的时候改改df索引位置。后面一毛一样。</p>
+<p>大家好像还是比较喜欢这种视觉冲击力强的图，确实在投文章的时候也能会加分。所以后来慢慢从搬运代码到<a href="https://www.jianshu.com/p/59428e69da05">自己用ggplot2实现</a>，最终是山寨了一下...</p>
+<p>当然，如果要原汁原味的bubble plot还是推荐用Y叔的<a href="http://bioconductor.org/packages/release/bioc/html/clusterProfiler.html">clusterProfiler</a>包。这里放一个我之前基于所里测<a href="https://gitee.com/shawnmagic/TM1_CRIv2_OrgDb">陆地棉TM-1v2的OrgDB</a>,喜欢折腾的小伙伴可以玩一下，不过kegg目前无解，kegg数据库里收录的陆地棉的注释实在是太老了。</p>
+<!--more-->
+<h2 id="参数">参数</h2>
+<figure data-type="image" tabindex="1"><img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/Bubble%20plot.png" alt="参数" loading="lazy"></figure>
+<p>这次干脆一勺烩了，柱状图，气泡图，基于GOplot那几个弦图，热图数据清洗起来有点麻烦，应该近期不会整....<br>
+<img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/20210126073636.jpg" alt="界面" loading="lazy"></p>
+<ul>
+<li>
+<p>input file 输入文件：</p>
+<ul>
+<li>如果是TBtools 生成的GO和KEGG结果，直接把输出的文件拖进来就好。注意如果GO富集分析想分别按照GOterm类别可视化，需要输入padj校正过的那个文件。</li>
+<li>如果自己定制的（customized）需要按照下表整理：<strong>表头写啥无所谓，顺序一定要正确！</strong></li>
+</ul>
+<p>| GO_Name                                                                                      | Gene_ratio  | HitsGenesCountsInSelectedSet | corrected p-value(BH method) |<br>
+|----------------------------------------------------------------------------------------------|-------------|------------------------------|------------------------------|<br>
+| steroid dehydrogenase activity, acting on the CH-OH group of donors, NAD or NADP as acceptor | 0.004023409 | 11                           | 0.496511055                  |<br>
+| quinone binding                                                                              | 0.004754938 | 13                           | 0.281163809                  |<br>
+| indole-3-acetic acid amido synthetase activity                                               | 0.002560351 | 7                            | 0.394598487                  |<br>
+| peptide receptor activity                                                                    | 0.001828822 | 5                            | 0.441252581                  |</p>
+</li>
+<li>
+<p>Term Number: 你想展示的GO term 或者KEGG Pathway数量，有时候富集分析结果会非常多，几百个结果全画出来不可能，这里筛选的条件就是Qvalue排名前<code>Term number</code>的数量。</p>
+</li>
+<li>
+<p>Input Data Form： 输入数据的格式，有三个选项</p>
+<ul>
+<li>TBtools_GO</li>
+<li>TBtools_KEGG</li>
+<li>customized</li>
+</ul>
+</li>
+<li>
+<p>Graph type: 你想画什么图</p>
+<ul>
+<li>Bubble， 气泡图</li>
+<li>bar， 柱状图</li>
+</ul>
+</li>
+<li>
+<p>min/max： 颜色是由Qvalue的大小定义的，越小越显著，这里是颜色变化范围的定义，从min到max渐变。</p>
+</li>
+<li>
+<p>output file label： 输出文件标签，为了区分你做的不同结果。</p>
+</li>
+</ul>
+<h2 id="使用方法">使用方法</h2>
+<p>这个.... 拖进去，选好参数，点点点，然后看结果...</p>
+<p>颜色方面...推荐下TBtools的colorPicker在</p>
+<pre><code>Graphics -&gt; color palette -&gt;colorpicker
+</code></pre>
+<p><img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/20210126090047.jpg" alt="color picker" loading="lazy"><br>
+选中一个颜色后复制类似<code>#fb8072</code>这种颜色代码，关闭<code>colorpicker</code>，粘贴到<code>min</code>或者<code>max</code>中。</p>
+<h2 id="多图预警">多图预警</h2>
+<p><img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/TBkeggbubble.jpg" alt="kegg bubble" loading="lazy"><br>
+<img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/TBkeggBar.jpg" alt="kegg bar" loading="lazy"><br>
+<img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/TBGObubble.jpg" alt="GO bubble" loading="lazy"><br>
+<img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/TBGObar.jpg" alt="GO bar" loading="lazy"><br>
+<img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/csbar.jpg" alt="cs bubble" loading="lazy"><br>
+<img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/cbub.jpg" alt="cs bar" loading="lazy"></p>
+<h2 id="下期预告">下期预告</h2>
+<p>下期会增加一个OneStepWGCNA的伴侣插件，有朋友反映如果取不到合适的<code>power</code>官网提供的那个经验<code>power</code>过于智障，想自己选择<code>power</code>构建...那么初步想法是把第一步跑完的结果写一个Rdata出来，然后扔到伴侣插件调参，包括<code>power</code>,<code>最小module size</code>，用新的<code>traitdata</code>和<code>datExpr</code>关联，还有后续关注的模块的<code>GS MM，hub</code>基因等...</p>
+<p>毕竟不能辱没了我调包狗，调参侠的名头...</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2%E7%9A%84%E5%BA%9F%E8%AF%9D">写在前面的废话</a></li>
+<li><a href="#%E5%8F%82%E6%95%B0">参数</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95">使用方法</a></li>
+<li><a href="#%E5%A4%9A%E5%9B%BE%E9%A2%84%E8%AD%A6">多图预警</a></li>
+<li><a href="#%E4%B8%8B%E6%9C%9F%E9%A2%84%E5%91%8A">下期预告</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://shawnwx2019.github.io/「Comparative-Genomics」Orthofinder官方文件解读/">
+              <h3 class="post-title">
+                「Comparative-Genomics」官方文档解读
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://shawnwx2019.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,286 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>「R-Crawler」根据uniprot ID批量检测基因的亚细胞定位 | Shawn&#39;s Bioinformatics Blog</title>
+<link rel="shortcut icon" href="https://shawnwx2019.github.io/favicon.ico?v=1677490078901">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://shawnwx2019.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="「R-Crawler」根据uniprot ID批量检测基因的亚细胞定位 | Shawn&#39;s Bioinformatics Blog - Atom Feed" href="https://shawnwx2019.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="课题遇到一个需求，需要从uniprot 网站数据库中查询目标蛋白的亚细胞定位情况，徒手一个一个搞肯定不行，这就需要使用爬虫了
+...
+
+应用场景
+得到一组基因后想看这些基因或者蛋白质在uniprot中亚细胞定位的结果，我们以一个actin基..." />
+    <meta name="keywords" content="爬虫,R" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://shawnwx2019.github.io">
+  <img class="avatar" src="https://shawnwx2019.github.io/images/avatar.png?v=1677490078901" alt="">
+  </a>
+  <h1 class="site-title">
+    Shawn&#39;s Bioinformatics Blog
+  </h1>
+  <p class="site-description">
+    <font color=green>温故而知新</font>
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              「R-Crawler」根据uniprot ID批量检测基因的亚细胞定位
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-11-03
+              </span>
+              <span>
+                7 min read
+              </span>
+              
+                <a href="https://shawnwx2019.github.io/WI8rOT5yu/" class="post-tag">
+                  # 爬虫
+                </a>
+              
+                <a href="https://shawnwx2019.github.io/G_5eRHzJub/" class="post-tag">
+                  # R
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <p>课题遇到一个需求，需要从<code>uniprot</code> 网站数据库中查询目标蛋白的亚细胞定位情况，徒手一个一个搞肯定不行，这就需要使用爬虫了</p>
+<p>...</p>
+<!-- more -->
+<h2 id="应用场景">应用场景</h2>
+<p>得到一组基因后想看这些基因或者蛋白质在<a href="https://www.uniprot.org/">uniprot</a>中亚细胞定位的结果，我们以一个actin基因为例，我们之前从蛋白组数据中得知该基因的<code>UniprotKB</code>号为：<code>P07830</code>，打开uniprot搜索P07830得到：<a href="https://www.uniprot.org/uniprot/P07830">uniprot-P07830</a>.<br>
+在<code>uniprot annotation</code>中我们发现定位只有细胞骨架（cytoskeleton），此外还有一个<code>GO term cell component</code>的注释，这里面除了在细胞骨架外还有注释到其他部位。<br>
+<img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/20211103090404.png" alt="" loading="lazy"><br>
+<img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/20211103090437.png" alt="" loading="lazy"></p>
+<p>如果一个一个搜，5000多个要搜很久，关键是数量阅读，手工搜越容易出错，所以通过对网页观察，写一个爬虫，批量搜索是必要的。</p>
+<h2 id="特征">特征</h2>
+<p>首先我们在点击左边导航栏的Subcellular location，我们再看地址栏的url变成了</p>
+<pre><code class="language-html">https://www.uniprot.org/uniprot/P07830#subcellular_location
+</code></pre>
+<p>其实对于不同的基因来说，亚细胞定位的网址规则就为</p>
+<pre><code class="language-html">https://www.uniprot.org/uniprot/ + UniprotKB + #subcellular_location
+</code></pre>
+<p>整体信息提取的思路就清晰了：</p>
+<ol>
+<li>通过上述网址规则逐个将每个基因的亚细胞定位信息从uniprot爬取下来。</li>
+<li>通过正则或者其他手段检测我们需要的亚细胞定位信息。</li>
+<li>整理表格输出。</li>
+</ol>
+<h2 id="运行">运行</h2>
+<p>这里我们检测一系列蛋白是否会定位到叶绿体，<br>
+所以我们需要提取的信息就很简单了，看亚细胞定位的结果中包不包含叶绿体（chloroplastic）</p>
+<p>这里用R的rvest包进行</p>
+<p>首先我们看用rvest爬取效果</p>
+<pre><code class="language-r">## 先测试下 UniprotKB 为 P19366 
+url_test = &quot;https://www.uniprot.org/uniprot/P19366#subcellular_location&quot;
+read_html(url_test) %&gt;% 
+      rvest::html_text() 
+## 结果
+[1] &quot;atpB - ATP synthase subunit beta, chloroplastic - Arabidopsis thaliana (Mouse-ear cress) - atpB gene &amp; protein\n\t\t\tvar BASE = '/';\n\t\t\n\t\t\t\tuniprot.isInternal = false;\n\t\t\t\tuniprot.namespace = 'uniprot';\n\t\t\t\tuniprot.releasedate = '2021_03';\n\t\t\t\n\t\t\t;\n\t\t\n\t\t\t\t// variable to store annotation data\n\t\t\t\tvar annotations = [];\n\t\t\t\tvar entryId = 'P19366';\n\t\t\t\tvar isObsolete = false || !true;\n\t\t\t\r\n                                    &lt;p&gt;An evidence describes the source of an annotation, e.g. an experiment that has been published in the scientific literature, an orthologous protein, a record from another database, etc.&lt;/p&gt;\r\n\r\n&lt;p&gt;&lt;a href=\&quot;/manual/evidences\&quot;&gt;More...&lt;/a&gt;&lt;/p&gt;\r\n                                Skip Header   UniProtKBxUniProtKBProtein knowledgebaseUniParcSequence archiveHelpHelp pages, FAQs, UniProtKB manual, documents, news archive and Biocuration projects.UniRefSequence clustersProteomesProtein sets from fully sequenced genomesAnnotation systemsSystems used to automatically annotate proteins with high accuracy:UniRule (Expertly curated rules)ARBA (System generated rules)Supporting dataSelect one of the options below to target your search:Literature citationsTaxonomyKeywordsSubcellular locationsCross-referenced databasesHuman diseasesAdvancedSearchxHomeBLASTAlignRetrieve/ID mappingPeptide searchSPARQLContactHelpYou are using a version of browser that may not display all the features of this website. Please consider upgrading your browser.\n\t\tThe new UniProt website is here! \n\t\tTake me to UniProt BETAxUniProtKB - P19366\n\t\t\t(ATPB_ARATH)Basket 0(max 400 entries)x\n\t\t\t\t\tYou...
+</code></pre>
+<p>我们看结果中有对该基因的注释中有大量的叶绿体（chloroplast）字段，看了下这些字段首先出现在.svg的图片中，说明是亚细胞定位的图片，其次是【pubmed】引用文献，最后是同源基因的描述，所以基本可以确定这个<code>P19366</code>是定位在叶绿体了，同时从他的基因annotation中也可以看出这个基因是叶绿体基因组编码的。所以接下来就直接用<code>grepl</code>去判断爬出来的这段乱七八糟的字符串中包不包含叶绿体（chloroplast）就可以判断了。整体流程如下：</p>
+<pre><code class="language-flow">flow
+st=&gt;start: UniprotKB ID
+op=&gt;operation: rvest web spider
+cond=&gt;condition: success or failed?
+op2=&gt;operation: grepl
+cond1=&gt;condition: TRUE or FALSE?
+e=&gt;end: output
+st-&gt;op-&gt;cond-&gt;op2-&gt;cond1
+cond(yes)-&gt;op2
+cond(no)-&gt;op
+cond1(yes)-&gt;e
+cond1(no)-&gt;e
+</code></pre>
+<pre><code class="language-r"># 加载包
+library(rvest)
+library(tidyverse)
+## 读取UniprotKB 信息
+test.p = read.delim(&quot;~/15.PostDoc/02.Project/13.cyl/result.txt&quot;,header = T,sep = &quot;\t&quot;)
+head(test.p)
+## 提取accession
+acc = test.p$Accession
+## 制作一个acc为第一列，第二列先填写0，用于后面循环中提取结果的放置
+df = data.frame(
+  Accession = acc,
+  Chlo_TorF = 0
+)
+
+## 开始爬数据
+for (i in 1:length(acc)) {
+  Sys.sleep(0.5)
+  tryCatch({
+    url = paste0(&quot;https://www.uniprot.org/uniprot/&quot;,acc[i],&quot;#subcellular_location&quot;)
+    torf = read_html(url) %&gt;% 
+      rvest::html_text() %&gt;% 
+      grepl(pattern = &quot;chloroplast&quot;,x = .)
+    df[i,2] = as.character(torf)
+    print(paste0(acc[i],&quot; finish&quot;))
+  },error = function(e) {
+    print(paste0(acc[i],&quot; has no search result in uniprot&quot;))}
+  )
+}
+## 由于网络问题，有部分基因可能会爬取失败，没有打包function，就找到他们再来一遍最后合并一下。如果还有没有爬出来的，再重复一遍
+## 给每个基因编号
+df$seq = c(1:nrow(df)
+## 找到搜索失败的基因对应的编号
+df %&gt;% 
+  filter(x == 0) %&gt;% 
+  select(seq) %&gt;% -&gt;xx
+## 处理成向量形式
+xx = xx$seq
+## 重新填充
+for (i in xx) {
+  Sys.sleep(0.5)
+  tryCatch({
+    url = paste0(&quot;https://www.uniprot.org/uniprot/&quot;,acc[i],&quot;#subcellular_location&quot;)
+    torf = read_html(url) %&gt;% 
+      rvest::html_text() %&gt;% 
+      grepl(pattern = &quot;chloroplast&quot;,x = .)
+    df[i,2] = as.character(torf)
+    print(paste0(acc[i],&quot; finish&quot;))
+  },error = function(e) {
+    print(paste0(acc[i],&quot; has no search result in uniprot&quot;))}
+  )
+}
+</code></pre>
+<p>结果我们会得到一张表格，第一列是UniprotKB ID，第二列是判断是否包含叶绿体，这样就把我们query中的基因是否在亚细胞定位结果中出现叶绿体做了批量判断。</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF">应用场景</a></li>
+<li><a href="#%E7%89%B9%E5%BE%81">特征</a></li>
+<li><a href="#%E8%BF%90%E8%A1%8C">运行</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://shawnwx2019.github.io/「TBtools-Plugin」WGCNAShiny保姆级教程/">
+              <h3 class="post-title">
+                「鸽王之王」WGCNAShiny保姆级教程
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://shawnwx2019.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

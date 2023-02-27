@@ -1,0 +1,432 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>「TBtools Plugin」如何把Shiny App搞成TBtools插件  | Shawn&#39;s Bioinformatics Blog</title>
+<link rel="shortcut icon" href="https://shawnwx2019.github.io/favicon.ico?v=1677490078901">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://shawnwx2019.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="「TBtools Plugin」如何把Shiny App搞成TBtools插件  | Shawn&#39;s Bioinformatics Blog - Atom Feed" href="https://shawnwx2019.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="emmm， 这篇文章后半部分还是面向TBtools插件开发者。原因和上一篇一样，因为操作太简单了
+...
+
+国际惯例，先上图
+
+扯在前面的蛋
+紧急插播：
+mac用户在安装插件之前，需要先打开Rserver输入以下代码：
+install.pa..." />
+    <meta name="keywords" content="TBtools,插件,富集分析" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://shawnwx2019.github.io">
+  <img class="avatar" src="https://shawnwx2019.github.io/images/avatar.png?v=1677490078901" alt="">
+  </a>
+  <h1 class="site-title">
+    Shawn&#39;s Bioinformatics Blog
+  </h1>
+  <p class="site-description">
+    <font color=green>温故而知新</font>
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              「TBtools Plugin」如何把Shiny App搞成TBtools插件 
+            </h2>
+            <div class="post-info">
+              <span>
+                2023-02-27
+              </span>
+              <span>
+                12 min read
+              </span>
+              
+                <a href="https://shawnwx2019.github.io/7IQ4dQhrNC/" class="post-tag">
+                  # TBtools
+                </a>
+              
+                <a href="https://shawnwx2019.github.io/fdXt7u8Hl5/" class="post-tag">
+                  # 插件
+                </a>
+              
+                <a href="https://shawnwx2019.github.io/juU6QRjoHA/" class="post-tag">
+                  # 富集分析
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <p>emmm， 这篇文章后半部分还是面向TBtools插件开发者。原因和上一篇一样，因为操作太简单了</p>
+<p>...</p>
+<!--more-->
+<p><strong>国际惯例，先上图</strong><br>
+<img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/shinyTBtoolsPlugin.jpg" alt="Bubble_shiny" loading="lazy"></p>
+<h2 id="扯在前面的蛋">扯在前面的蛋</h2>
+<p><strong>紧急插播：</strong><br>
+mac用户在安装插件之前，需要先打开Rserver输入以下代码：</p>
+<pre><code class="language-R">install.packages(&quot;https://cran.r-project.org/bin/macosx/contrib/4.0/cachem_1.0.3.tgz&quot;, repo=NULL,type=&quot;source&quot;)
+</code></pre>
+<p>原因是<code>cachem</code>包前几天更新了，是shiny的依赖包，不知道是tuna没有更新<code>cachem</code>在macos下的二进制包还是怎么回事，R会从源码（src）编译，在win下没问题，但是貌似在mac下编译会出错... 所以mac用户这段时期只能安装<code>cran</code>的<code>binaries</code>，而且测试了下新的1.0.4版本貌似不能用，（不清楚是shiny没更新还是tuna的问题）1.0.3版本目前没问题。</p>
+<hr>
+<p>自从CJ大佬打包了R之后，实现了不需要折腾linux或者unix终端，或者windows下用Rscript运行R脚本，直接通过点点点实现，其实这个操作在之前的Shiny中早就实现了，但是一直没有勇气去折腾... 潜哥和邵博建议我去鼓捣下，过年这段日子也没法干活，就跟着B站搬运油管的shiny app入门的视频教程学了起来。<br>
+传送门：</p>
+<ul>
+<li>B站： <a href="https://www.bilibili.com/video/BV1RJ411E7Fx?from=search&amp;seid=4694507056464394541">手把手 如何制作R Shiny app</a></li>
+<li>油管： <a href="https://www.youtube.com/watch?v=_0ORRJqctHE&amp;list=UUbck9jjLpwj7U6HHNps_9Gw&amp;t=0s">R Shiny app tutorial # 1 - How to make shiny apps - An introduction to Shiny</a></li>
+<li>github: <a href="https://github.com/aagarw30/R-Shinyapp-Tutorial">R-Shinyapp-Tutorial</a></li>
+</ul>
+<p>作者：<em>Abhinav Agrawal</em><br>
+这位老哥的教程可以说是一勺一勺喂，感觉在稍微精通R的情况下，只要不憨，把视频啃完，上手shiny App没问题...<br>
+额，时间有限，没有看完大佬的讲解，直接上github把代码撸下来看着理解。现在也基本看了不到1/5，了解一点点皮毛，就开始上手搞了...依样画葫芦，用辣眼睛的代码把之前的那个bubble plot做成了shiny app。虽然很粗糙，but，又不是不能用！</p>
+<p>Shiny App的优点在于你可以实时调整参数而且看到调参后的结果，这个就很爽了。试想一下之后吧OneStepWGCNA写成Shiny App，可以放更多的参数，甚至可以分步做，第一步样品聚类剔除掉离群值，然后看sft选择合适的power，接着根据分模块的情况选择最小模块基因数量...后续还有拿出感兴趣的基因做GS MM，导出关系等...（我好像给自己挖了个坑...）</p>
+<p>而今天的推文主要是我发现shiny app其实可以写成脚本用Rscript启动，然后本地测试，既然能用Rscript跑，那么就能搞成插件... 所以在情人节那天，搞了一天整出来了。后续还是CJ大佬的一个常规操作，点击运行后直接弹出浏览器，运行Shiny App。</p>
+<h2 id="shiny-app界面">Shiny App界面</h2>
+<p>简单来讲可以把它看做一个网页工具。<br>
+<img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/shiny1.jpg" alt="shiny app page" loading="lazy"><br>
+我们把左边的灰色的这一栏叫做<code>side bar</code>里面是一些调节参数的部件，</p>
+<ul>
+<li><strong>Browse...</strong> 点击后上传你的富集分析结果，</li>
+<li><strong>Input File Type</strong> 选择你输入的文件是什么软件导出的结果，TBtools的GO enrichment工具还是kegg enrichment工具，这两种结果可以直接上传软件生成的原始表格，但是其他富集分析的结果比如<code>David</code>等一些其他软件导出的结果需要按照我之前提到的格式修改表格并且保存成<strong>制表符分隔符的txt文件</strong>再进行导入。这里我放了GSEA的结果，这个是新加的。如果有GSEA的结果想要展示需要按照以下格式整理，就是将GSEA结果中<code>gsea_report_for_xxx.A.tsv</code>和<code>gsea_report_for_xxx.B.tsv</code>两个文件中的term合并，当然筛选条目的标准自己定义，这里不做推荐。GSEA结果的可视化现在还不完美，后续会继续调整...</li>
+</ul>
+<figure data-type="image" tabindex="1"><img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/GSEA.jpg" alt="GSEA demo" loading="lazy"></figure>
+<ul>
+<li><strong>Select the value from Slider</strong> 额，这里偷懒忘了改label了，这里其实想说的是<strong>The number of GO term (KEGG pathway) to be displayed</strong> 就是图片上想展示的GO Term或者KEGG pathway数量。</li>
+<li><strong>Pvalue color Minimum/maxmum</strong> pvalue的颜色范围，这个好理解，点开就是个取色板，玩过PS或者AI的同学应该熟悉。</li>
+<li><strong>Project name</strong> 我执意保留的一个没啥用的选项... 用来区分你不同的富集分析结果导出图片的名字。</li>
+<li><strong>Graph size-width/height</strong> 在插件版中，我自己写了一个<code>figsize</code>的函数来自动调整图片大小随着 longest term和term number变化自动调节，这里吧这个权利还给了用户，让你自定义大小，输出自己看的顺眼的图片。</li>
+</ul>
+<p>右边有两个页面，一个Table，一个plot</p>
+<ul>
+<li>table目前没有做扩展，只是简单的将你输入的表格显示出来，后续可能会出一些选项实现筛选，过滤等操作....</li>
+<li>plot就是简洁明了的图片展示，现在还没有找到调整height的合适方法，不过可以达到预览的效果... 凑合用吧...</li>
+<li>Download按钮
+<ul>
+<li>如果你GO term（或者kegg pathway）中最长的那个term又臭又长，我建议把size-width调大一点，如果你选择的GO term很多，比如100，建议把height也调大一点。不过那么大的图片基本放论文里不可能了....</li>
+<li>后续可能会把上限调高一点... 看用户反馈</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p>下面内容适合插件开发者。</p>
+<h2 id="tbtools-plugin-shiny-app-脚本结构">TBtools plugin Shiny App 脚本结构</h2>
+<p>可能有人觉得我是脱了裤放屁，多此一举，都整成shiny app了，为啥还要打成TBtools插件，难道是在搞套娃吗..<br>
+其实不然，</p>
+<ul>
+<li>首先，我没有自己的服务器去部署shiny app，即便之前买了3年的腾讯云，但是1核2G... 还是鸡肋。所以不如打包在自己的pc上跑；</li>
+<li>其次，就算写好了R脚本，运行起来，不管通过Rstudio还是Rscript，都有一定的门槛，虽然很低...</li>
+<li>不是说写成插件就所有人都会用了，还可能有一部分同学搞不明白，根据之前的反馈，多半是死在了包安装上... 但这是我能想到的目前可行的最方便的方法了...</li>
+</ul>
+<p>我们看Shiny App的脚本结构基本分为<code>ui</code>和<code>server</code>两部分，最后<code>shinyApp(ui = ui, server = server)</code>,当然要让软件跑起来，还需要预先做好准备工作所以我的脚本大概分为下面4部分：<br>
+<img src="https://shawnmagic-1257599720.cos.ap-chengdu.myqcloud.com/TBtools-plugin%20ShinyApp.png" alt="代码结构" loading="lazy"></p>
+<h2 id="准备工作"><strong>准备工作</strong></h2>
+<p>一些预设选项和包加载，其中<code>shiny</code>和<code>htmltools</code>是必须装的，而且独立安装htmltools的版本和<code>shiny</code>要求的版本不符,所以建议先装shiny，然后library一下，会提示需要装哪个版本的<code>htmltools</code> 然后再装<code>htmltools</code>就搞定了，另外<code>jscode</code>这里和<code>shinyjs</code>也写上，这些是为后面在界面上出现一个关闭APP按钮而设置的，不然你用插件打开shinny app后没办法关闭它，在你关机或重启之前，你那个localhost的端口会一直被占用。</p>
+<pre><code class="language-R">## options and import packages
+options(stringsAsFactors = F)
+options(&quot;repos&quot; = c(CRAN=&quot;https://mirrors.tuna.tsinghua.edu.cn/CRAN/&quot;))
+jscode &lt;- &quot;shinyjs.closeWindow = function() { window.close(); }&quot; # using shinyjs to stop shiny app
+if (!require('shiny')) install.packages('shiny')
+library(shiny)
+if (!require('htmltools')) install.packages('htmltools')
+if (!require('ggplot2')) install.packages('ggplot2')
+if (!require('dplyr')) install.packages('dplyr')
+if (!require('stringr')) install.packages('stringr')
+if (!require('magrittr')) install.packages('magrittr')
+if (!require('shinyjs')) install.packages('shinyjs')
+if (!require('colourpicker')) install.packages('colourpicker')
+library(shiny)
+library(shinyjs)
+library(colourpicker)
+library(ggplot2)
+library(dplyr)
+library(magrittr)
+library(stringr)
+</code></pre>
+<h2 id="提前写好function"><strong>提前写好function</strong></h2>
+<p>主要是方便后面调用，如果到了server中再去写这些会使server部分的代码看起来很臃肿，其次是这些function我提前写好了....</p>
+<pre><code class="language-R">## functions
+## 01.GO Bubble Plot
+## function中内容太长了，省略掉了
+GOBubblePlot = function(expfile, num, name,colormin,colormax,Gtype){...}
+KEGGBubblePlot = function(expfile, num, name,colormin,colormax,Gtype){...}
+customBubblePlot = function(expfile, num, name,colormin,colormax,Gtype){...}
+GSEAplot = function(expfile, num, name,colormin,colormax,Gtype){...}
+</code></pre>
+<h2 id="ui界面"><strong>ui（界面）</strong></h2>
+<p>没有用shinydashboard，就默认的...美化之类的是以后有空琢磨的事，现在的任务就是把它跑出来。 节省版面，具体设置省略 代码放在gitee.<br>
+大框架就是先整一个fluidPage，下层分别是：</p>
+<ul>
+<li>标题框</li>
+<li>调用shinyjs</li>
+<li>动作是关闭窗口</li>
+<li>动作按钮设置</li>
+<li>sidebar 框架
+<ul>
+<li>sidebar (参数调整界面）</li>
+<li>mainPanel （结果呈现界面）</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-R">ui = shinyUI(fluidPage(
+  titlePanel(h4(&quot;Enrichment Bubble Plot&quot;)),
+  
+  # stop shiny app via js code
+  useShinyjs(),
+  extendShinyjs(text = jscode, functions = c(&quot;closeWindow&quot;)),
+  actionButton(&quot;close&quot;, &quot;Stop the App&quot;, class = &quot;btn-warning&quot;),
+  # sidebar setting
+  sidebarLayout(
+    sidebarPanel(
+      # Input files
+      fileInput(inputId = &quot;file&quot;,
+                label = &quot;Upload enrichment result&quot;),
+      help(&quot;The results of TBtools enrichment can be uploaded directly, results generated from other softwares need to be input in the required format&quot;),
+      # Select the input file type.
+      radioButtons(...),
+      # Term number, how many terms do you want to demonstrate
+      sliderInput(...),
+      # Min color
+      colourpicker::colourInput(...),
+      # Max color
+      colourpicker::colourInput(...),
+      # Graph type, bubble plot or bar plot
+      radioButtons(...),
+      # Project name
+      textInput(...),
+      # output graph size width
+      sliderInput(...),
+      # output graph size height
+      sliderInput(...),
+      p( &quot;If there is a longer GO term or Pathway name, it is recommended to increase the width of the picture. If the number of terms you select is to large, it is recommended to increase the height of the picture.&quot;)
+    ),
+    # demonstration part
+    mainPanel(
+      uiOutput(&quot;tb&quot;)
+      )
+    )
+  )
+)
+</code></pre>
+<h2 id="server代码执行"><strong>server(代码执行)</strong></h2>
+<p>辣眼睛的来了...<br>
+如果把ui界面想成参数设置的板块，那么server这块就是用之前的参数，数据进行处理，最终生成结果。<br>
+学艺不精... 本着能用就行的态度写了这一串又臭又长的reactive... 早上邵阳老铁指出可以精简的方法，哈哈，正在消化。其实也可以看出在写server板块之前先把function写好，确实会让server代码看起来更加清爽一点..</p>
+<pre><code class="language-R">
+server &lt;- shinyServer(function(input,output){
+  ## set para
+  DataF &lt;- reactive({
+    as.character(input$DataF)
+  })
+  num &lt;- reactive({
+    as.numeric(input$num)
+  })
+  name &lt;- reactive({
+    as.character(input$name)
+  })
+  colormin &lt;- reactive({
+    as.character(input$colormin)
+  })
+  colormax &lt;- reactive({
+    as.character(input$colormax)
+  })
+  Gtype &lt;- reactive({
+    as.character(input$Gtype)
+  })
+  w &lt;- reactive({
+    as.numeric(input$w)
+  })
+  h &lt;- reactive({
+    as.numeric(input$h)
+  })
+  # import file
+  data &lt;- reactive({...
+  })
+  ## show tables
+  output$finalTable &lt;- renderTable({...
+  })
+
+  p &lt;- reactive({
+    if(is.null(data())){return()}
+    if (DataF() == &quot;TBtools_GO&quot;) {
+      GOBubblePlot(...)
+    } else if (DataF() == &quot;TBtools_KEGG&quot;) {
+      KEGGBubblePlot(...)
+    } else if (DataF() == &quot;customized&quot;) {
+      customBubblePlot(...)
+    } else if (DataF() == &quot;GSEA&quot;) {
+      GSEAplot(...)
+    }
+  })
+  ## exhibit plot
+  output$finalplot &lt;- renderPlot({
+    p()
+  })
+  ## download
+  output$down &lt;- downloadHandler(
+    filename = function(){
+      paste0(name(),&quot;Bubble_plot.pdf&quot;)
+    },
+    content = function(file){
+      ggsave(file,plot = p(),width = w(),height = h(),dpi = 300)
+    }
+  )
+  ## table sets
+  output$tb &lt;- renderUI({
+    if(is.null(data()))
+      h5(&quot;Please upload your enrichment result&quot;)
+    else
+      tabsetPanel(tabPanel(title = &quot;Table&quot;,tableOutput(&quot;finalTable&quot;)),
+#                  tabPanel(title = &quot;Information&quot;,tableOutput(&quot;info&quot;)),
+                  tabPanel(title = &quot;plot&quot;,
+                           plotOutput(&quot;finalplot&quot;),
+                           downloadButton(&quot;down&quot;,&quot;Download the plot in PDF formate&quot;)))
+})
+  ## close window
+  observeEvent(input$close, {
+    js$closeWindow()
+    stopApp()
+  })
+}) 
+</code></pre>
+<h2 id="总结">总结</h2>
+<p>写shiny的确是一种挑战，我这次小试牛刀就感觉真的麻烦无比，但是这种感觉好像刚开始学习R一样，或许写着写着就熟练了... 先达到能用，再到界面布局优化，再到代码高效，整洁。蹒跚学步，抛砖引玉... 最后期待下各位大神的作品吧！<br>
+献丑了...</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E6%89%AF%E5%9C%A8%E5%89%8D%E9%9D%A2%E7%9A%84%E8%9B%8B">扯在前面的蛋</a></li>
+<li><a href="#shiny-app%E7%95%8C%E9%9D%A2">Shiny App界面</a></li>
+<li><a href="#tbtools-plugin-shiny-app-%E8%84%9A%E6%9C%AC%E7%BB%93%E6%9E%84">TBtools plugin Shiny App 脚本结构</a></li>
+<li><a href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><strong>准备工作</strong></a></li>
+<li><a href="#%E6%8F%90%E5%89%8D%E5%86%99%E5%A5%BDfunction"><strong>提前写好function</strong></a></li>
+<li><a href="#ui%E7%95%8C%E9%9D%A2"><strong>ui（界面）</strong></a></li>
+<li><a href="#server%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C"><strong>server(代码执行)</strong></a></li>
+<li><a href="#%E6%80%BB%E7%BB%93">总结</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://shawnwx2019.github.io/「R-Crawler」根据uniprot-ID批量提取GO-ID/">
+              <h3 class="post-title">
+                「R-Crawler」根据uniprot ID批量提取GO ID
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://shawnwx2019.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

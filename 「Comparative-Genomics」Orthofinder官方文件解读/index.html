@@ -1,0 +1,285 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>「Comparative-Genomics」官方文档解读 | Shawn&#39;s Bioinformatics Blog</title>
+<link rel="shortcut icon" href="https://shawnwx2019.github.io/favicon.ico?v=1677490078901">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://shawnwx2019.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="「Comparative-Genomics」官方文档解读 | Shawn&#39;s Bioinformatics Blog - Atom Feed" href="https://shawnwx2019.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="在基因组进化分析和基因家族分析中少不了对同源基因（homologs）的分析,当然同源基因又分为直系同源(orthologs)和旁系同源(paralogs)，如图：
+
+
+...
+ Photo courtesy of:  Popo H. Lia..." />
+    <meta name="keywords" content="orthofinder,Mac,bioinformatics,基因家族,进化" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://shawnwx2019.github.io">
+  <img class="avatar" src="https://shawnwx2019.github.io/images/avatar.png?v=1677490078901" alt="">
+  </a>
+  <h1 class="site-title">
+    Shawn&#39;s Bioinformatics Blog
+  </h1>
+  <p class="site-description">
+    <font color=green>温故而知新</font>
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              「Comparative-Genomics」官方文档解读
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-03-06
+              </span>
+              <span>
+                5 min read
+              </span>
+              
+                <a href="https://shawnwx2019.github.io/6gwYvvd5G0/" class="post-tag">
+                  # orthofinder
+                </a>
+              
+                <a href="https://shawnwx2019.github.io/vfComFSggu/" class="post-tag">
+                  # Mac
+                </a>
+              
+                <a href="https://shawnwx2019.github.io/-7KH0PNTVn/" class="post-tag">
+                  # bioinformatics
+                </a>
+              
+                <a href="https://shawnwx2019.github.io/LdICAmrgCC/" class="post-tag">
+                  # 基因家族
+                </a>
+              
+                <a href="https://shawnwx2019.github.io/IULlUUCusE/" class="post-tag">
+                  # 进化
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <p>在基因组进化分析和基因家族分析中少不了对同源基因（homologs）的分析,当然同源基因又分为直系同源(orthologs)和旁系同源(paralogs)，如图：</p>
+<!-- more -->
+<figure data-type="image" tabindex="1"><img src="http://bitesizebio.s3.amazonaws.com/wp-content/uploads/2015/11/05153902/Homology.png" alt="homologs" loading="lazy"></figure>
+<p>...</p>
+<p><font color = grey size =2> Photo courtesy of:  Popo H. Liao (Own work), via Wikimedia Commons</font><br>
+如何区分请看：<a href="https://bitesizebio.com/26762/homology-terminology-never-say-wrong-word/">Homology Terminology: Never Say the Wrong Word Again</a><!--more--></p>
+<h2 id="名词解释">名词解释</h2>
+<figure data-type="image" tabindex="2"><img src="https://github.com/davidemms/OrthoFinder/raw/master/assets/Orthogroups_Orthologues_Paralogues.png" alt="Orthologues, Orthogroups &amp; Paralogues" loading="lazy"></figure>
+<blockquote>
+<p>Orthologs are pairs of genes that descended from a single gene in the last common ancestor (LCA) of two species (Figure 2A &amp; B). An orthogroup is the extension of the concept of orthology to groups of species. An orthogroup is the group of genes descended from a single gene in the LCA of a group of species (Figure 2A).</p>
+</blockquote>
+<blockquote>
+<p>The example Figure 2 contains an orthogroup from three species, human, mouse and chicken. Human and mouse each have one gene in this orthogroup (HuA and MoA, respectively) while chicken has two genes (ChA1 and ChA2). The human and mouse genes are a pair of genes descended from a single gene in the last common ancestor of the two species, therefore these two genes are orthologs and there is a one-to-one orthology relationship between the two genes.</p>
+</blockquote>
+<blockquote>
+<p>The two chicken genes arose from a gene duplication event after the lineage leading to chicken split from the lineage leading to human and mouse. As gene duplication events give rise to paralogs, ChA1 and ChA2 are paralogs of each other. However, both chicken genes are descended from a single gene in the last common ancestor of the three species. Therefore, both chicken genes are orthologs of the human gene and the mouse gene. Although they are orthologs, sometimes these complex relationships are referred to as co-orthologs (e.g. ChA1 and ChA2 are co-orthologs of HuA). In this case there is a many-to-one orthology relationship between the chicken genes and the human gene. There are only three kinds of orthology relationships one-to-one, many-to-one, and many-to-many. All of these relationships are identified by OrthoFinder.</p>
+</blockquote>
+<p><strong>Speak English, 说人话:</strong>  👴🏻、🐭和🐔有一个最近的共同的祖先（Last common ancestor，LCA），这个<strong>LCA</strong>在进化中分化出了👴🏻，🐭和🐔，LCA的一个基因<font color = red><strong>A</strong></font>在🐔中复制了一次变成<font color=green>ChA1、ChA2</font>,但是在哺乳动物中没有变，👴🏻中<font color = orange>HuA</font>和🐭中<font color = blue>MoA</font>，来掰扯下这4个基因的关系：</p>
+<ul>
+<li>直系同源: 可以理解为从老祖宗LCA那传下来的，压根没变就是figure2B中<font color = orange>HuA</font>和<font color = blue>MoA</font>，<font color = orange>HuA</font>分别和<font color=green>ChA1、ChA2</font>，<font color = blue>MoA</font>分别和<font color=green>ChA1、ChA2</font>。</li>
+<li>直系同源组： 这4个基因并称为直系同源组（有点基因家族的意思）</li>
+<li>旁系同源：在🐔中这个基因出现了复制事件，那么🐔里面的这两个基因：<font color=green>ChA1、ChA2</font>称作旁系同源。</li>
+</ul>
+<h2 id="软件介绍">软件介绍</h2>
+<p>奉上软件地址：<a href="https://github.com/davidemms/OrthoFinder">davidemms/OrthoFinder</a><br>
+官方分析流程：<a href="https://davidemms.github.io/orthofinder_tutorials/exploring-orthofinders-results.html">OrthoFinder Tutorials</a></p>
+<h3 id="orthofinder-能干啥">orthofinder 能干啥</h3>
+<p>对于比较基因组学（comparative genomics）<code>OrthoFinder</code>是一个快速的，准确的以及全面的平台，作用：</p>
+<ul>
+<li>找到同源群组orthogroups <sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>（不知道怎么翻译合适）</li>
+<li>找到同源基因（orthologs）；</li>
+<li>对orthogroups构建有根树</li>
+<li>鉴定基因复制时间（gene duplication events）<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup></li>
+<li>构建物种树。</li>
+<li>将基因的复制时间对应到物种树上。</li>
+</ul>
+<h3 id="软件安装">软件安装</h3>
+<p>总结为2点：</p>
+<ul>
+<li>linux和Mac用conda：这里要注意<code>orthofinder</code>的<code>Python</code>环境为python2，我之前在mac上装在<code>python3</code>的<code>env</code>下结果出现了各种奇葩报错，什么<code>diamond</code>不在环境变量，python出错等，装到python2下面立马就消停了...</li>
+</ul>
+<pre><code class="language-bash">## 最好给orthoFinder建一个新的conda environment。
+conda creat -n orthofinder orthofinder=2.27
+</code></pre>
+<ul>
+<li>windows 最好用docker, 没试过，不评价，官方给的教程应该没问题。</li>
+</ul>
+<pre><code class="language-docker">docker pull davidemms/orthofinder
+docker run -it --rm davidemms/orthofinder orthofinder -h
+docker run --ulimit nofile=1000000:1000000 -it --rm -v /full/path/to/fastas:/input:Z davidemms/orthofinder orthofinder -f /input
+</code></pre>
+<h2 id="软件使用">软件使用</h2>
+<p>官方给的命令也很简单,只需要把你要做的物种的蛋白序列放到一个空路径下，然后：</p>
+<pre><code class="language-bash">OrthoFinder/orthofinder -f OrthoFinder/ExampleDataset &amp;
+</code></pre>
+<p>这个只是初级阶段的用法，还有大量的参数可以调。</p>
+<h2 id="分析过程">分析过程</h2>
+<p>自己尝试看了下没看懂，这里引用<a href="https://www.jianshu.com/p/16e0bbb2ba19">徐州更hoptop</a>的博文</p>
+<ul>
+<li>BLAST all-vs-all搜索。使用BLASTP以evalue=10e-3进行搜索，寻找潜在的同源基因。(除了BLAST, 还可以选择DIAMOND和MMSeq2)</li>
+<li>基于基因长度和系统发育距离对BLAST bit得分进行标准化。</li>
+<li>使用RBNHs确定同源组序列性相似度的阈值</li>
+<li>构建直系同源组图(orthogroup graph)，用作MCL的输入</li>
+<li>使用MCL对基因进行聚类，划分直系同源组</li>
+</ul>
+<p>OrthoFinder2在OrthoFinder的基础上增加了物种系统发育树的构建，流程如下</p>
+<ul>
+<li>为每个直系同源组构建基因系统发育树</li>
+<li>使用STAG算法从无根基因树上构建无根物种树</li>
+<li>使用STRIDE算法构建有根物种树</li>
+<li>有根物种树进一步辅助构建有根基因树。</li>
+</ul>
+<p>--未完待续...</p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p><a href="https://github.com/davidemms/OrthoFinder#orthogroups-orthologs--paralogs">What are orthogroups, orthologs &amp; paralogs?</a> <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p><a href="https://en.wikipedia.org/wiki/Gene_duplication">Gene duplication</a> <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A">名词解释</a></li>
+<li><a href="#%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D">软件介绍</a>
+<ul>
+<li><a href="#orthofinder-%E8%83%BD%E5%B9%B2%E5%95%A5">orthofinder 能干啥</a></li>
+<li><a href="#%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85">软件安装</a></li>
+</ul>
+</li>
+<li><a href="#%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8">软件使用</a></li>
+<li><a href="#%E5%88%86%E6%9E%90%E8%BF%87%E7%A8%8B">分析过程</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://shawnwx2019.github.io/hello-gridea/">
+              <h3 class="post-title">
+                Hello Gridea
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://shawnwx2019.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
