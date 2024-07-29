@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://shawnwx2019.github.io</id>
+    <title>Shawn の Blog</title>
+    <updated>2024-07-29T03:09:48.460Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://shawnwx2019.github.io"/>
+    <link rel="self" href="https://shawnwx2019.github.io/atom.xml"/>
+    <subtitle>&lt;font color=green&gt;温故而知新&lt;/font&gt;</subtitle>
+    <logo>https://shawnwx2019.github.io/images/avatar.png</logo>
+    <icon>https://shawnwx2019.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2024, Shawn の Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[「MetMiner」数据清洗 - 离群样本]]></title>
+        <id>https://shawnwx2019.github.io/metminer-datacleaing-outlier/</id>
+        <link href="https://shawnwx2019.github.io/metminer-datacleaing-outlier/">
+        </link>
+        <updated>2024-07-29T00:43:47.000Z</updated>
+        <summary type="html"><![CDATA[<p>在引言部分我们讲过离群样本的判别，很大程度上和实验设计相关，对于无样本异质性，变量较少的实验设计是一种方案，而对于存在样本异质性，或者引入了多样化变量的实验设计这里需要慎重去除...</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>在引言部分我们讲过离群样本的判别，很大程度上和实验设计相关，对于无样本异质性，变量较少的实验设计是一种方案，而对于存在样本异质性，或者引入了多样化变量的实验设计这里需要慎重去除...</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[「MetMiner」数据清洗 - 去噪]]></title>
+        <id>https://shawnwx2019.github.io/metminer-remove-noise/</id>
+        <link href="https://shawnwx2019.github.io/metminer-remove-noise/">
+        </link>
+        <updated>2024-07-27T09:48:40.000Z</updated>
+        <summary type="html"><![CDATA[<p>数据清洗的第一步是根据统计样本中代谢物的缺失率（missing value rate）来标记噪音。MetMiner中标记噪音的具体方式较为多样化...</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>数据清洗的第一步是根据统计样本中代谢物的缺失率（missing value rate）来标记噪音。MetMiner中标记噪音的具体方式较为多样化...</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[「MetMiner」数据清洗 - Overview]]></title>
+        <id>https://shawnwx2019.github.io/metminer-datacleaning-overview/</id>
+        <link href="https://shawnwx2019.github.io/metminer-datacleaning-overview/">
+        </link>
+        <updated>2024-07-27T08:47:49.000Z</updated>
+        <summary type="html"><![CDATA[<p>该部分是数据清洗前的准备工作，主要的作用是通过观测QC样本的峰面积的boxplot以及整体样本中代谢物的缺失情况来补充batch信息，如果没有观测到明显的批次效应则可以直接进行后续分析。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>该部分是数据清洗前的准备工作，主要的作用是通过观测QC样本的峰面积的boxplot以及整体样本中代谢物的缺失情况来补充batch信息，如果没有观测到明显的批次效应则可以直接进行后续分析。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[「MetMiner」数据清洗 - 引言]]></title>
+        <id>https://shawnwx2019.github.io/metminer-datacleaning-Introduce/</id>
+        <link href="https://shawnwx2019.github.io/metminer-datacleaning-Introduce/">
+        </link>
+        <updated>2024-07-26T09:06:15.000Z</updated>
+        <summary type="html"><![CDATA[<p>我们将代谢组学数据分析大致的分为了两部分，第一部分数据清洗，也就是将包含<strong>系统误差</strong>、<strong>批次效应</strong>、<strong>噪音</strong>、<strong>离群样本</strong>，等多种干扰因素的「原始数据」<strong>清洗</strong>成「干净数据」。MetMiner在执行数据清洗前会对原始数据进行质控，尽早的基于质控样本（QC）来观测是否具有严重批次效应的出现，以及由于实验操作失误产生的异常数据；</p>
+<p>该部分主要介绍两点：</p>
+<ol>
+<li>
+<p>代谢组数据误差来源原理和解决方案；</p>
+</li>
+<li>
+<p>数据清洗步骤简介；</p>
+</li>
+</ol>
+]]></summary>
+        <content type="html"><![CDATA[<p>我们将代谢组学数据分析大致的分为了两部分，第一部分数据清洗，也就是将包含<strong>系统误差</strong>、<strong>批次效应</strong>、<strong>噪音</strong>、<strong>离群样本</strong>，等多种干扰因素的「原始数据」<strong>清洗</strong>成「干净数据」。MetMiner在执行数据清洗前会对原始数据进行质控，尽早的基于质控样本（QC）来观测是否具有严重批次效应的出现，以及由于实验操作失误产生的异常数据；</p>
+<p>该部分主要介绍两点：</p>
+<ol>
+<li>
+<p>代谢组数据误差来源原理和解决方案；</p>
+</li>
+<li>
+<p>数据清洗步骤简介；</p>
+</li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[「MetMiner」数据导入]]></title>
+        <id>https://shawnwx2019.github.io/metminer-data-import/</id>
+        <link href="https://shawnwx2019.github.io/metminer-data-import/">
+        </link>
+        <updated>2024-06-24T00:47:17.000Z</updated>
+        <summary type="html"><![CDATA[<p>MetMiner流程整合了mass_dataset数据输入格式，所以具有灵活多变的数据输入模式，本文介绍了通过metMiner进行代谢组数据分析前的数据准备及项目初始化工作。</p>
+<p>主要从一下几方面说明：</p>
+<ol>
+<li>原始数据格式转换和文件结构（从原始数据导入）；</li>
+<li>提峰表格准备（从其它软件提峰表格导入）；</li>
+<li>mass_dataset准备（从mass_dataset类型数据导入）；</li>
+</ol>
+]]></summary>
+        <content type="html"><![CDATA[<p>MetMiner流程整合了mass_dataset数据输入格式，所以具有灵活多变的数据输入模式，本文介绍了通过metMiner进行代谢组数据分析前的数据准备及项目初始化工作。</p>
+<p>主要从一下几方面说明：</p>
+<ol>
+<li>原始数据格式转换和文件结构（从原始数据导入）；</li>
+<li>提峰表格准备（从其它软件提峰表格导入）；</li>
+<li>mass_dataset准备（从mass_dataset类型数据导入）；</li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[「MetMiner」非靶代谢组数据准备和项目初始化]]></title>
+        <id>https://shawnwx2019.github.io/metminer-fei-ba-dai-xie-zu-shu-ju-zhun-bei-he-xiang-mu-chu-shi-hua/</id>
+        <link href="https://shawnwx2019.github.io/metminer-fei-ba-dai-xie-zu-shu-ju-zhun-bei-he-xiang-mu-chu-shi-hua/">
+        </link>
+        <updated>2024-06-22T02:32:16.000Z</updated>
+        <summary type="html"><![CDATA[<p>MetMiner流程整合了mass_dataset数据输入格式，所以具有灵活多变的数据输入模式，本文介绍了通过metMiner进行代谢组数据分析前的数据准备及项目初始化工作。</p>
+<p>主要从一下几方面说明：</p>
+<ol>
+<li>Metadata准备（实验数据管理及样本命名规则）；</li>
+<li>原始数据格式转换和文件结构（从原始数据导入）；</li>
+<li>提峰表格准备（从其它软件提峰表格导入）；</li>
+<li>mass_dataset准备（从mass_dataset类型数据导入）；</li>
+</ol>
+]]></summary>
+        <content type="html"><![CDATA[<p>MetMiner流程整合了mass_dataset数据输入格式，所以具有灵活多变的数据输入模式，本文介绍了通过metMiner进行代谢组数据分析前的数据准备及项目初始化工作。</p>
+<p>主要从一下几方面说明：</p>
+<ol>
+<li>Metadata准备（实验数据管理及样本命名规则）；</li>
+<li>原始数据格式转换和文件结构（从原始数据导入）；</li>
+<li>提峰表格准备（从其它软件提峰表格导入）；</li>
+<li>mass_dataset准备（从mass_dataset类型数据导入）；</li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[「TBtools Plugin」有手就行，让GPT4给你写个ShinyApp实现文件合并]]></title>
+        <id>https://shawnwx2019.github.io/tbtools-plugin-you-shou-jiu-xing-rang-gpt4-gei-ni-xie-ge-shinyapp-shi-xian-wen-jian-he-bing/</id>
+        <link href="https://shawnwx2019.github.io/tbtools-plugin-you-shou-jiu-xing-rang-gpt4-gei-ni-xie-ge-shinyapp-shi-xian-wen-jian-he-bing/">
+        </link>
+        <updated>2023-09-18T13:10:56.000Z</updated>
+        <summary type="html"><![CDATA[<p>突然有个需求，然后花了差不多半个小时指挥GPT4干完了... 说实话，这效率也太快了，要是让我从头手打，估计要折腾一下午。</p>
+<p>这篇博客就记录下如何和GPT打配合搞定ShinyApp，并且通过CLI program wapper creator工具将shinyapp制作成插件分享给大家。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>突然有个需求，然后花了差不多半个小时指挥GPT4干完了... 说实话，这效率也太快了，要是让我从头手打，估计要折腾一下午。</p>
+<p>这篇博客就记录下如何和GPT打配合搞定ShinyApp，并且通过CLI program wapper creator工具将shinyapp制作成插件分享给大家。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[「WGS」VEP进行SNP注释]]></title>
+        <id>https://shawnwx2019.github.io/wgs_vep_snp_annotation/</id>
+        <link href="https://shawnwx2019.github.io/wgs_vep_snp_annotation/">
+        </link>
+        <updated>2023-03-28T02:07:15.000Z</updated>
+        <summary type="html"><![CDATA[<h1 id="背景">背景</h1>
+<ul>
+<li>参考基因组： <a href="https://download.maizegdb.org/B73_RefGen_v2/">玉米B73_v2,数据来源-MaizeGDB</a></li>
+<li>基因注释文件：<a href="https://download.maizegdb.org/B73_RefGen_v2/ZmB73_5a.59_WGS.gff3.gz">ZmB73_5a.59_WGS.gff3.gz</a></li>
+<li>数据源：本课题自测的20个玉米的40x重测序数据。</li>
+</ul>
+]]></summary>
+        <content type="html"><![CDATA[<h1 id="背景">背景</h1>
+<ul>
+<li>参考基因组： <a href="https://download.maizegdb.org/B73_RefGen_v2/">玉米B73_v2,数据来源-MaizeGDB</a></li>
+<li>基因注释文件：<a href="https://download.maizegdb.org/B73_RefGen_v2/ZmB73_5a.59_WGS.gff3.gz">ZmB73_5a.59_WGS.gff3.gz</a></li>
+<li>数据源：本课题自测的20个玉米的40x重测序数据。</li>
+</ul>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[「Metabolomics」SERRF代码重构]]></title>
+        <id>https://shawnwx2019.github.io/metabolomics-serrf-dai-ma-chong-gou/</id>
+        <link href="https://shawnwx2019.github.io/metabolomics-serrf-dai-ma-chong-gou/">
+        </link>
+        <updated>2023-03-01T01:17:30.000Z</updated>
+        <summary type="html"><![CDATA[<h1 id="介绍">介绍</h1>
+<p>SERRF是 U.C Davis Fiehn Lab的<em>S.L Fan</em>开发的一款<code>QC-based</code>数据标准化工具，用于校正非靶代谢组学数据的系统误差，具有出色的能力，校正后features RSD显著降低。目前使用方式有3种：</p>
+<ul>
+<li>通过网页工具<a href="https://slfan2013.github.io/SERRF-online/#">https://slfan2013.github.io/SERRF-online/#</a> 进行上传数据分析；</li>
+<li>通过本地运行shiny app，需要在将仓库克隆到本地，然后用Rstudio打开脚本运行<code>run app</code>;</li>
+<li>通过本地运行normalize function运行。</li>
+</ul>
+<p>emmm... 经过尝试，第三种运行比较顺利。但是文件准备设置输出等步骤还是太麻烦，所以打算对<code>SERRF</code>方法单独拿出来进行重构。并且接入<code>Tidymass</code>的<code>massdataset</code>，加入分析流程。</p>
+]]></summary>
+        <content type="html"><![CDATA[<h1 id="介绍">介绍</h1>
+<p>SERRF是 U.C Davis Fiehn Lab的<em>S.L Fan</em>开发的一款<code>QC-based</code>数据标准化工具，用于校正非靶代谢组学数据的系统误差，具有出色的能力，校正后features RSD显著降低。目前使用方式有3种：</p>
+<ul>
+<li>通过网页工具<a href="https://slfan2013.github.io/SERRF-online/#">https://slfan2013.github.io/SERRF-online/#</a> 进行上传数据分析；</li>
+<li>通过本地运行shiny app，需要在将仓库克隆到本地，然后用Rstudio打开脚本运行<code>run app</code>;</li>
+<li>通过本地运行normalize function运行。</li>
+</ul>
+<p>emmm... 经过尝试，第三种运行比较顺利。但是文件准备设置输出等步骤还是太麻烦，所以打算对<code>SERRF</code>方法单独拿出来进行重构。并且接入<code>Tidymass</code>的<code>massdataset</code>，加入分析流程。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[「R-Crawler」规范化与技巧]]></title>
+        <id>https://shawnwx2019.github.io/r-crawler-gui-fan-hua-yu-ji-qiao/</id>
+        <link href="https://shawnwx2019.github.io/r-crawler-gui-fan-hua-yu-ji-qiao/">
+        </link>
+        <updated>2023-03-01T01:02:36.000Z</updated>
+        <summary type="html"><![CDATA[<p>之前在使用<code>rvest</code>,<code>RCurl</code>以及<code>XML</code>包编写爬虫时只是单纯的考虑到了信息提取和格式转换，没有考虑到爬虫对目标服务器的负载压力，之前也使用过暴力并行，虽然速度很快，但是对目标网站服务器负载造成了很大压力，这样既不道德，也不安全。被反爬机制检测到会封ip等。本次就实战中遇到问题解决问题做个总结。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>之前在使用<code>rvest</code>,<code>RCurl</code>以及<code>XML</code>包编写爬虫时只是单纯的考虑到了信息提取和格式转换，没有考虑到爬虫对目标服务器的负载压力，之前也使用过暴力并行，虽然速度很快，但是对目标网站服务器负载造成了很大压力，这样既不道德，也不安全。被反爬机制检测到会封ip等。本次就实战中遇到问题解决问题做个总结。</p>
+]]></content>
+    </entry>
+</feed>
